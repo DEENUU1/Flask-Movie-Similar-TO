@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import os
 import json
 from dataclasses import dataclass
+from typing import List, Dict, Any
+
 
 load_dotenv()
 
@@ -10,7 +12,7 @@ load_dotenv()
 class SearchMovie:
     """ This class allows to get movie ID """
 
-    def __init__(self, query: str = "Avengers"):
+    def __init__(self, query: str = "Transporter"):
         self.api_key = os.getenv('MOVIEDB_API_KEY')
         self.query = query
 
@@ -24,7 +26,6 @@ class SearchMovie:
         """ This method returns user movie ID """
         base_url = "https://api.themoviedb.org/3/search/movie?api_key="
         result = get(base_url + self.api_key + "&query=" + self.create_query())
-        print(base_url + self.api_key + "&query=" + self.create_query())
         json_result = json.loads(result.content)
         movie = json_result['results']
 
@@ -47,13 +48,24 @@ class SimilarMovies:
     def __init__(self):
         self.search = SearchMovie()
 
-    def search_for_similar_movies(self) -> json:
-        """ This method is returning json file with similar movies"""
+    def search_for_similar_movies(self) -> List[Dict[str, Any]]:
+        """ This method is returning json file with similar movies
+            from all pages from 1 to 1000"""
         api_key = os.getenv("MOVIEDB_API_KEY")
         base_url = "https://api.themoviedb.org/3/movie/"
-        response = get(f"{base_url}{self.search.return_movie_id}/recommendations?api_key={api_key}&language=us")
-        json_result = json.loads(response.content)
-        return json_result['results']
+        all_results = []
+        page_number = 1
+        while True:
+            response = get(
+                f"{base_url}{self.search.return_movie_id}/recommendations?api_key={api_key}&page={page_number}")
+            json_result = json.loads(response.content)
+            if not json_result.get('results'):
+                break
+            all_results.extend(json_result['results'])
+            page_number += 1
+            if page_number > 1000:
+                break
+        return all_results
 
     def return_similar_movies(self) -> list[SimilarMovieData]:
         """ This method returns
