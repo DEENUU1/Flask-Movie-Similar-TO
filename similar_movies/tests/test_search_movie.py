@@ -1,7 +1,7 @@
 import pytest
 from requests import Response
 from unittest import mock
-from similar_movies.search_movie import SearchMovie
+from similar_movies.search_movie import SearchMovie, SimilarMovieData
 
 
 @pytest.fixture
@@ -27,3 +27,13 @@ def mocked_requests_get(*args):
 def test_return_movie_id(mock_get, movie_search):
     movie_search.query = "The Transporter"
     assert movie_search.return_movie_id == "4108"
+
+
+def test_similar_movie_data_class():
+    data = SimilarMovieData("Ant man", "Short overview", "20.06.2018", "/poster.png")
+    assert data.title == "Ant man"
+    assert data.overview == "Short overview"
+    assert data.release_date == "20.06.2018"
+    assert data.poster == "/poster.png"
+
+
