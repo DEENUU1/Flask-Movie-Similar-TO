@@ -11,7 +11,7 @@ def mock_search_movie():
 
 @pytest.fixture
 def movie_search():
-    return SearchMovie()
+    return SearchMovie("Ant man and the wasp")
 
 
 def test_create_query(mock_search_movie):

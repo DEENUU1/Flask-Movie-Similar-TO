@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Similar movies to {{movie_name}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/list_similar_movie.css" />
+    <script src="/static/js/list_similar_movie.js" defer></script>
+</head>
+<body>
+
+{% for movie in return_similar_movies %}
+    <div class="card">
+        <img src="https://image.tmdb.org/t/p/w500/{{movie.poster}}"/>
+        <div class="card-info">
+            <h2>{{movie.title}}
+            <span>({{movie.release_date}})</span>
+            </h2>
+
+            <p>{{movie.overview}}</p>
+        </div>
+    </div>
+{% endfor %}
+
+
+</body>
+</html>
