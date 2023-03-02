@@ -1,0 +1,28 @@
+{% block script %}
+<script src="/static/js/navigation_bar.js" defer></script>
+{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" type="text/css" href="/static/css/navigation_bar.css" />
+{% endblock %}
+
+<header id="navbar">
+<nav class="navbar-container container">
+  <a href="/" class="home-link">
+    YOUR MOVIE
+  </a>
+  <button type="button" id="navbar-toggle" aria-controls="navbar-menu" aria-label="Toggle menu" aria-expanded="false">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <div id="navbar-menu" aria-labelledby="navbar-toggle">
+    <ul class="navbar-links">
+      <li class="navbar-item"><a class="navbar-link" href="#L1">Projects</a></li>
+      <li class="navbar-item"><a class="navbar-link" href="https://github.com/DEENUU1">GitHub</a></li>
+      <li class="navbar-item"><a class="navbar-link" href="https://www.linkedin.com/in/kacper-wlodarczyk/">LinkedIn</a></li>
+    </ul>
+  </div>
+</nav>
+</header>
+
