@@ -12,7 +12,7 @@ load_dotenv()
 class SearchMovie:
     """ This class allows to get movie ID """
 
-    def __init__(self, query: str = "Transporter"):
+    def __init__(self, query: str):
         self.api_key = os.getenv('MOVIEDB_API_KEY')
         self.query = query
 
@@ -45,8 +45,8 @@ class SimilarMovieData:
 
 class SimilarMovies:
 
-    def __init__(self):
-        self.search = SearchMovie()
+    def __init__(self, query: str):
+        self.search = SearchMovie(query)
 
     def search_for_similar_movies(self) -> List[Dict[str, Any]]:
         """ This method is returning json file with similar movies
@@ -81,10 +81,3 @@ class SimilarMovies:
             )
             all_movies.append(movie_data)
         return all_movies
-
-
-obj = SimilarMovies()
-movies_similar = obj.return_similar_movies()
-
-for movie in movies_similar:
-    print(movie.title)
