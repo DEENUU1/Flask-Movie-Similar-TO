@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Similar movies to {{movie_name}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/list_similar_movie.css" />
+    <script src="/static/js/list_similar_movie.js" defer></script>
 </head>
 <body>
 
@@ -11,98 +13,15 @@
     <div class="card">
         <img src="https://image.tmdb.org/t/p/w500/{{movie.poster}}"/>
         <div class="card-info">
-            <h2>{{movie.title}}</h2>
-            <span>{{movie.release_date}}</span>
+            <h2>{{movie.title}}
+            <span>({{movie.release_date}})</span>
+            </h2>
+
             <p>{{movie.overview}}</p>
         </div>
     </div>
 {% endfor %}
 
-<style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      overflow-x: hidden;
-    }
-    .card {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      margin: 0 auto;
-      max-width: 800px;
-      background-color: #ffffff;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-      overflow: hidden;
-      padding: 20px;
-      border-style: solid;
-      margin-top: 20px;
-      transform: translateX(400%);
-      transition: transform 0.7s ease;
-    }
-
-    .card:nth-of-type(even) {
-      transform: translateX(-400%);
-    }
-
-    .card.show {
-        transform: translateX(0);
-    }
-
-    .card img {
-      width: 30%;
-      margin-right: 20px;
-      object-fit: cover;
-    }
-
-    .card-info {
-      width: 70%;
-    }
-
-    .card-info h2 {
-      margin-top: 0;
-    }
-
-    @media only screen and (max-width: 768px) {
-      .card {
-        flex-direction: column;
-        align-items: stretch;
-        max-width: 100%;
-      }
-
-      .card img {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 20px;
-      }
-    }
-
-</style>
-
-<script>
-const cards = document.querySelectorAll('.card');
-window.addEventListener('scroll', checkBoxes);
-
-checkBoxes();
-
-function checkBoxes() {
-    const triggerBottom = window.innerHeight / 5 * 4;
-
-    cards.forEach(card => {
-        const cardTop = card.getBoundingClientRect().top;
-        if (cardTop < triggerBottom) {
-            card.classList.add('show');
-        } else {
-            card.classList.remove('show');
-        }
-    });
-}
-
-
-
-</script>
 
 </body>
 </html>

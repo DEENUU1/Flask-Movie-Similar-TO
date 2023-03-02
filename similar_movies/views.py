@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from similar_movies.search_movie import SimilarMovies, SearchMovie
+from similar_movies.search_movie import SimilarMovies
 
 
 views = Blueprint('views', __name__)

@@ -75,7 +75,7 @@ class SimilarMovies:
         for movie in self.search_for_similar_movies():
             movie_data = SimilarMovieData(
                 title=movie['title'],
-                release_date=movie['release_date'],
+                release_date=movie['release_date'][:4],
                 overview=movie['overview'],
                 poster=movie['poster_path']
             )
