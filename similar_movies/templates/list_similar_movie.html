@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Similar movies</title>
+    <title>Similar movies to {{movie_name}}</title>
 </head>
 <body>
 
 {% for movie in return_similar_movies %}
 
-    <p>{{movie.title}}</p>
+    <h2>{{movie.title}}</h2>
+    <span>{{movie.release_date}}</span>
+    <img src="https://image.tmdb.org/t/p/w500/{{movie.poster}}"/>
+    <p>{{movie.overview}}</p>
 
 {% endfor %}
 

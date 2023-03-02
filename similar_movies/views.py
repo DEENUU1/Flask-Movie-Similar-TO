@@ -21,4 +21,5 @@ def list_similar_movie():
     return_similar_movies = similar_movies.return_similar_movies()
 
     return render_template('list_similar_movie.html',
-                           return_similar_movies=return_similar_movies)
+                           return_similar_movies=return_similar_movies,
+                           movie_name=movie_name)
