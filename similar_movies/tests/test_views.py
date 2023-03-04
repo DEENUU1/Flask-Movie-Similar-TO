@@ -1,9 +1,5 @@
 from similar_movies import create_app
-from similar_movies import db
-from similar_movies.models import User
-import pytest
-from werkzeug.security import generate_password_hash
-from similar_movies import create_app
+
 
 def test_home_view():
     """ Test for the main view status code

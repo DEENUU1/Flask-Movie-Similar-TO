@@ -27,7 +27,7 @@
             <p>{{movie.overview}}</p>
 
             <form action="{{ url_for('views.save_movie') }}" method="POST">
-                <input type="hidden" name="title" value="{{ movie.title }}">
+                <input type="hidden" name="title" value="{{ movie.title }} ({{movie.release_date}})">
                 <input type="hidden" name="poster" value="{{movie.poster}}">
                 <button type="submit">Save movie</button>
             </form>
