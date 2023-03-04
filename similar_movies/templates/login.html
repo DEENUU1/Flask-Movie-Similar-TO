@@ -4,19 +4,22 @@
 {% block title %}Find similar film{% endblock %}
 
 {% block style %}
-
+  <link rel="stylesheet" type="text/css" href="/static/css/login.css" />
 {% endblock %}
 
 
 {% block content %}
-<form method="POST">
-  <h3>Login</h3>
-  <label for="email">Email</label>
-  <input type="text" id="email" name="email" class="form-control">
-  <label for="password">Password</label>
-  <input type="password" id="password" name="password" class="form-control">
-  <button type="submit">Login</button>
-</form>
+
+<div class="login-container">
+  <div class="login form">
+    <header>Login</header>
+    <form method="POST">
+        <input type="text" id="email" name="email" class="form-control">
+        <input type="password" id="password" name="password" class="form-control">
+        <input type="button" class="button" value="Login">
+    </form>
+  </div>
+</div>
 
 {% for message in get_flashed_messages() %}
     {{ message }}

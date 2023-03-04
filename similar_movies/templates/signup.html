@@ -4,23 +4,23 @@
 {% block title %}Find similar film{% endblock %}
 
 {% block style %}
-
+  <link rel="stylesheet" type="text/css" href="/static/css/signup.css" />
 {% endblock %}
 
 
 {% block content %}
-<h3>Sign Up</h3>
-<form method="POST">
-    <label for="email">Email</label>
-    <input type="text" id="email" name="email" class="form-control">
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username" class="form-control">
-    <label for="password1">Password</label>
-    <input type="password" id="password1" name="password1" class="form-control">
-    <label for="password2">Repeat password</label>
-    <input type="password" id="password2" name="password2" class="form-control">
-    <button type="submit">Sign Up</button>
-</form>
+<div class="login-container">
+  <div class="login form">
+    <header>Sign Up</header>
+    <form method="POST">
+        <input type="text" id="email" name="email" class="form-control">
+        <input type="password" id="username" name="username" class="form-control">
+        <input type="password" id="password1" name="password1" class="form-control">
+        <input type="password" id="password2" name="password2" class="form-control">
+        <input type="button" class="button" value="Sign Up">
+    </form>
+  </div>
+</div>
 
 {% for message in get_flashed_messages() %}
     {{ message }}
