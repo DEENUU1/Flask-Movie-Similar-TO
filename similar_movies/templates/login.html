@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block title %}Find similar film{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" type="text/css" href="/static/css/login.css" />
+{% endblock %}
+
+
+{% block content %}
+
+<div class="login-container">
+  <div class="login form">
+    <header>Login</header>
+    <form method="POST">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" class="form-control">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control">
+        <input type="submit" class="button" value="Login">
+    </form>
+      {% for message in get_flashed_messages() %}
+        {{ message }}
+      {% endfor %}
+  </div>
+</div>
+
+
+
+
+{% endblock %}
