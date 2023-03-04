@@ -1,13 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Similar movies to {{movie_name}}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/css/list_similar_movie.css" />
+{% extends "base.html" %}
+
+{% block title %} Similar movies to {{movie_name}} {% endblock %}
+
+{% block script %}
     <script src="/static/js/list_similar_movie.js" defer></script>
-</head>
-<body>
+{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="/static/css/list_similar_movie.css" />
+{% endblock %}
+
+{% block content %}
+
+<div class="header">
+  <h1>Movies similar to {{movie_name}}</h1>
+</div>
 
 {% for movie in return_similar_movies %}
     <div class="card">
@@ -16,12 +24,15 @@
             <h2>{{movie.title}}
             <span>({{movie.release_date}})</span>
             </h2>
-
             <p>{{movie.overview}}</p>
+
+            <form action="{{ url_for('views.save_movie') }}" method="POST">
+                <input type="hidden" name="title" value="{{ movie.title }} ({{movie.release_date}})">
+                <input type="hidden" name="poster" value="{{movie.poster}}">
+                <button type="submit">Save movie</button>
+            </form>
+
         </div>
     </div>
 {% endfor %}
-
-
-</body>
-</html>
+{% endblock %}
