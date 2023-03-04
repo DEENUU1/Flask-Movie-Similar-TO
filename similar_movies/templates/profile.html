@@ -20,12 +20,21 @@
     <tr>
         <td>Image</td>
         <td>Title</td>
+        <td>Delete</td>
     </tr>
     {% for movie in saved_movies %}
     <tr>
         <td><img style="width: 150px;height:200px;" src="https://image.tmdb.org/t/p/w500/{{movie.image_url}}"/></td>
         <td><h2>{{movie.title}}</h2></td>
+        <td>
+            <form action="{{ url_for('views.delete_movie', id=movie.id) }}" method="POST">
+            <input type="hidden" name="title" value="{{ movie.title }} ({{movie.release_date}})">
+            <input type="hidden" name="poster" value="{{movie.poster}}">
+            <button type="submit">Delete movie</button>
+            </form>
+        </td>
     </tr>
+
     {% endfor %}
 </table>
 
