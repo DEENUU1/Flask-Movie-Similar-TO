@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from similar_movies.search_movie import SimilarMovies
-
+from flask_login import current_user
 
 views = Blueprint('views', __name__)
 
@@ -12,7 +12,8 @@ def home():
         movie_name = request.form['movie_name']
         return redirect(url_for('views.list_similar_movie', movie_name=movie_name))
     else:
-        return render_template('home.html')
+        return render_template('home.html',
+                               user=current_user)
 
 
 @views.route('/similar', methods=['GET'])
@@ -24,4 +25,5 @@ def list_similar_movie():
 
     return render_template('list_similar_movie.html',
                            return_similar_movies=return_similar_movies,
-                           movie_name=movie_name)
+                           movie_name=movie_name,
+                           user=current_user)

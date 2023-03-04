@@ -21,6 +21,12 @@
       <li class="navbar-item"><a class="navbar-link" href="#L1">Projects</a></li>
       <li class="navbar-item"><a class="navbar-link" href="https://github.com/DEENUU1">GitHub</a></li>
       <li class="navbar-item"><a class="navbar-link" href="https://www.linkedin.com/in/kacper-wlodarczyk/">LinkedIn</a></li>
+      {% if user.is_authenticated %}
+      <li class="navbar-item"><a class="navbar-link" href="/logout">Logout</a></li>
+      {% else %}
+      <li class="navbar-item"><a class="navbar-link" href="/login">Login</a></li>
+      <li class="navbar-item"><a class="navbar-link" href="/signup">Sign up</a></li>
+      {% endif %}
     </ul>
   </div>
 </nav>
