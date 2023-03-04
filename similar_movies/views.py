@@ -41,3 +41,13 @@ def save_movie():
     db.session.commit()
     flash("Movie saved in your profile", category='success')
     return redirect(url_for('auth.profile'))
+
+
+@views.route('/delete-movie/<int:id>', methods=['POST'])
+@login_required
+def delete_movie(id):
+    movie = SavedMovies.query.get(id)
+    db.session.delete(movie)
+    db.session.commit()
+    flash("Movie deleted from your profile", category='success')
+    return redirect(url_for('auth.profile'))
