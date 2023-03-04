@@ -14,16 +14,19 @@
   <div class="login form">
     <header>Login</header>
     <form method="POST">
+        <label for="email">Email</label>
         <input type="text" id="email" name="email" class="form-control">
+        <label for="password">Password</label>
         <input type="password" id="password" name="password" class="form-control">
-        <input type="button" class="button" value="Login">
+        <input type="submit" class="button" value="Login">
     </form>
+      {% for message in get_flashed_messages() %}
+        {{ message }}
+      {% endfor %}
   </div>
 </div>
 
-{% for message in get_flashed_messages() %}
-    {{ message }}
-{% endfor %}
+
 
 
 {% endblock %}

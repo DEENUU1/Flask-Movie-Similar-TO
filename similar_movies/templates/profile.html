@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+
+{% block title %}Find similar film{% endblock %}
+
+{% block style %}
+<!--  <link rel="stylesheet" type="text/css" href="/static/css/login.css" />-->
+{% endblock %}
+
+
+{% block content %}
+
+<h1>User profile</h1>
+<h2>Saved movies</h2>
+
+
+
+
+<table>
+    <tr>
+        <td>Image</td>
+        <td>Title</td>
+    </tr>
+    {% for movie in saved_movies %}
+    <tr>
+        <td><img style="width: 150px;height:200px;" src="https://image.tmdb.org/t/p/w500/{{movie.image_url}}"/></td>
+        <td><h2>{{movie.title}}</h2></td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

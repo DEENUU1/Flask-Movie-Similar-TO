@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from similar_movies import db
-from .models import User
+from .models import User, SavedMovies
 
 auth = Blueprint("auth", __name__)
 
@@ -65,6 +65,14 @@ def sign_up():
 @auth.route('/logout')
 @login_required
 def logout():
-    """ This form allows user to logout """
+    """ This function allows user to logout """
     logout_user()
     return redirect(url_for('views.home'))
+
+
+@auth.route('/profile')
+@login_required
+def profile():
+    """ This view displays user's profile """
+    saved_movies = SavedMovies.query.filter_by(user_id=current_user.id).all()
+    return render_template("profile.html", saved_movies=saved_movies, user=current_user)

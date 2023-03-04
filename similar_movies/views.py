@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from similar_movies.search_movie import SimilarMovies
-from flask_login import current_user
+from flask_login import current_user, login_required
+from similar_movies.models import SavedMovies
+from similar_movies import db
 
 views = Blueprint('views', __name__)
 
@@ -27,3 +29,15 @@ def list_similar_movie():
                            return_similar_movies=return_similar_movies,
                            movie_name=movie_name,
                            user=current_user)
+
+
+@views.route('/save-movie', methods=['POST'])
+@login_required
+def save_movie():
+    title = request.form.get('title')
+    poster = request.form.get('poster')
+    save_movie = SavedMovies(user_id=current_user.id, title=title, image_url=poster)
+    db.session.add(save_movie)
+    db.session.commit()
+    flash("Movie saved in your profile", category='success')
+    return redirect(url_for('auth.profile'))
