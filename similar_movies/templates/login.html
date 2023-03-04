@@ -12,10 +12,15 @@
 <form method="POST">
   <h3>Login</h3>
   <label for="email">Email</label>
-  <input type="text" id="email" name="email">
+  <input type="text" id="email" name="email" class="form-control">
   <label for="password">Password</label>
-  <input type="password" id="password" name="password">
+  <input type="password" id="password" name="password" class="form-control">
   <button type="submit">Login</button>
 </form>
+
+{% for message in get_flashed_messages() %}
+    {{ message }}
+{% endfor %}
+
 
 {% endblock %}

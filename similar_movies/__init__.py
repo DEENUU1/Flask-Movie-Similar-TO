@@ -1,11 +1,9 @@
 import os
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+
 from dotenv import load_dotenv
-from .views import views
-from .auth import auth
-from .models import User
+from flask import Flask
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 load_dotenv()
 
@@ -19,8 +17,13 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
+    from .views import views
+    from .auth import auth
+
     app.register_blueprint(views)
     app.register_blueprint(auth)
+
+    from .models import User
 
     create_database(app)
 
@@ -36,5 +39,8 @@ def create_app():
 
 
 def create_database(app):
-    if not os.path.exists("similar_movies" + DB_NAME):
-        db.create_all(app=app)
+    """ This function is check if a database exists.
+        If it's not it create a new one. """
+    if not os.path.exists('similar_movies' + DB_NAME):
+        with app.app_context():
+            db.create_all()

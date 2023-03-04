@@ -12,14 +12,18 @@
 <h3>Sign Up</h3>
 <form method="POST">
     <label for="email">Email</label>
-    <input type="text" id="email" name="email">
+    <input type="text" id="email" name="email" class="form-control">
     <label for="username">Username</label>
-    <input type="text" id="username" name="username">
+    <input type="text" id="username" name="username" class="form-control">
     <label for="password1">Password</label>
-    <input type="password" id="password1" name="password1">
+    <input type="password" id="password1" name="password1" class="form-control">
     <label for="password2">Repeat password</label>
-    <input type="password" id="password2" name="password2">
+    <input type="password" id="password2" name="password2" class="form-control">
     <button type="submit">Sign Up</button>
 </form>
+
+{% for message in get_flashed_messages() %}
+    {{ message }}
+{% endfor %}
 
 {% endblock %}
