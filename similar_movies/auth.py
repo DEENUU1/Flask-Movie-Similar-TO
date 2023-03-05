@@ -74,5 +74,5 @@ def logout():
 @login_required
 def profile():
     """ This view displays user's profile """
-    saved_movies = SavedMovies.query.filter_by(user_id=current_user.id).all()
-    return render_template("profile.html", saved_movies=saved_movies, user=current_user)
+    saved_shows = SavedMovies.query.filter_by(user_id=current_user.id).all()
+    return render_template("profile.html", saved_shows=saved_shows, user=current_user)

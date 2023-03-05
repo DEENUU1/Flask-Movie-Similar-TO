@@ -17,19 +17,19 @@
   <h1>Movies similar to {{movie_name}}</h1>
 </div>
 
-{% for movie in return_similar_movies %}
+{% for show in return_similar_shows %}
     <div class="card">
-        <img src="https://image.tmdb.org/t/p/w500/{{movie.poster}}"/>
+        <img src="https://image.tmdb.org/t/p/w500/{{show.poster}}"/>
         <div class="card-info">
-            <h2>{{movie.title}}
-            <span>({{movie.release_date}})</span>
+            <h2>{{show.title}}
+            <span>({{show.release_date}})</span>
             </h2>
-            <p>{{movie.overview}}</p>
+            <p>{{show.overview}}</p>
 
-            <form action="{{ url_for('views.save_movie') }}" method="POST">
-                <input type="hidden" name="title" value="{{ movie.title }} ({{movie.release_date}})">
-                <input type="hidden" name="poster" value="{{movie.poster}}">
-                <button type="submit">Save movie</button>
+            <form action="{{ url_for('views.save_show') }}" method="POST">
+                <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
+                <input type="hidden" name="poster" value="{{show.poster}}">
+                <button type="submit">Add to "Watch later" </button>
             </form>
 
         </div>

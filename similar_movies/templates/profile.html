@@ -11,7 +11,7 @@
 {% block content %}
 
 <h1>User profile</h1>
-<h2>Saved movies</h2>
+<h2>Saved shows</h2>
 
 
 
@@ -22,15 +22,15 @@
         <td>Title</td>
         <td>Delete</td>
     </tr>
-    {% for movie in saved_movies %}
+    {% for show in saved_shows %}
     <tr>
-        <td><img style="width: 150px;height:200px;" src="https://image.tmdb.org/t/p/w500/{{movie.image_url}}"/></td>
-        <td><h2>{{movie.title}}</h2></td>
+        <td><img style="width: 150px;height:200px;" src="https://image.tmdb.org/t/p/w500/{{show.image_url}}"/></td>
+        <td><h2>{{show.title}}</h2></td>
         <td>
-            <form action="{{ url_for('views.delete_movie', id=movie.id) }}" method="POST">
-            <input type="hidden" name="title" value="{{ movie.title }} ({{movie.release_date}})">
-            <input type="hidden" name="poster" value="{{movie.poster}}">
-            <button type="submit">Delete movie</button>
+            <form action="{{ url_for('views.delete_show', id=show.id) }}" method="POST">
+            <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
+            <input type="hidden" name="poster" value="{{show.poster}}">
+            <button type="submit">Delete from "Watch later"</button>
             </form>
         </td>
     </tr>
