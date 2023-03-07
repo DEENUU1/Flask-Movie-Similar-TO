@@ -8,7 +8,7 @@
 
 
 {% block style %}
-    <link rel="stylesheet" type="text/css" href="/static/css/list_similar_movie.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/upcoming_list.css" />
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
   <h1>Upcoming Movies</h1>
 </div>
 
-{% for show in return_upcoming %}
+{% for show in movies %}
     <div class="card">
         <img src="https://image.tmdb.org/t/p/w500/{{show.poster}}"/>
         <div class="card-info">
@@ -35,4 +35,14 @@
         </div>
     </div>
 {% endfor %}
+
+
+<div class="pagination">
+    <a href="?page{{current_page - 1 }}" class="btn btn-primary"><<</a>
+    <a href="?page={{current_page + 1}}" class="btn btn-primary">>></a>
+</div>
+
+
+
+
 {% endblock %}

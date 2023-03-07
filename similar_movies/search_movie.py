@@ -48,15 +48,15 @@ class Similar:
         self.search = Search(query, type)
         self.type = type
         self.api_key = os.getenv("MOVIEDB_API_KEY")
+        self.base_url = "https://api.themoviedb.org/3/"
 
     def search_for_similar(self) -> List[Dict[str, Any]]:
         """ This method is searching for similar tv shows or movies """
-        base_url = f"https://api.themoviedb.org/3/{self.type}/"
         all_results = []
         page_number = 1
         while True:
             response = get(
-                f"{base_url}{self.search.return_id}/recommendations?api_key={self.api_key}&page={page_number}")
+                f"{self.base_url}{self.type}/{self.search.return_id}/recommendations?api_key={self.api_key}&page={page_number}")
             json_result = json.loads(response.content)
             if not json_result.get('results'):
                 break
@@ -100,40 +100,39 @@ class Similar:
 class UpComingData:
     title: str
     poster: str
-    release_date: str
     overview: str
+    release_date: str
 
 
 class UpComingMovies:
     def __init__(self):
         self.api_key = os.getenv("MOVIEDB_API_KEY")
+        self.base_url = "https://api.themoviedb.org/3/movie/now_playing"
 
-    def search_upcoming_movies(self) -> List[Dict[str, Any]]:
-        """ This method is searching for upcoming movies available in cinema """
-        base_url = f"https://api.themoviedb.org/3/movie/now_playing?api_key="
-        all_results = []
-        page_number = 1
-        while True:
-            response = get(
-                f"{base_url}{self.api_key}&page={page_number}")
-            json_result = json.loads(response.content)
-            if not json_result.get('results'):
-                break
-            all_results.extend(json_result['results'])
-            page_number += 1
-            if page_number > 1000:
-                break
-        return all_results
+    def search_upcoming_movies(self, page: int = 1) -> List[Dict[str, Any]]:
+        """This method searches for upcoming movies available in cinema
+        on a specific page and with a specific number of results per page"""
+        response = get(
+            f"{self.base_url}?api_key={self.api_key}&page={page}")
+        json_result = json.loads(response.content)
+        if not json_result.get('results'):
+            return []
+        return json_result['results']
 
-    def return_upcoming_movies(self) -> list[UpComingData]:
-        """ This method allows to return data from API about upcoming movies """
+    def return_upcoming_movies(self, page: int = 1) -> List[UpComingData]:
+        """ This method allows returning data from the API about upcoming movies
+         on a specific page and with a specific number of results per page"""
         all_upcoming = []
-        for upcoming in self.search_upcoming_movies():
+        for upcoming in self.search_upcoming_movies(page=page):
             upcoming_data = UpComingData(
                 title=upcoming['title'],
-                release_date=upcoming['release_date'],
                 overview=upcoming['overview'],
-                poster=upcoming['poster_path']
+                poster=upcoming['poster_path'],
+                release_date=upcoming['release_date']
+
             )
             all_upcoming.append(upcoming_data)
         return all_upcoming
+
+
+

@@ -3,6 +3,7 @@ from similar_movies.search_movie import Similar, UpComingMovies
 from flask_login import current_user, login_required
 from similar_movies.models import SavedMovies
 from similar_movies import db
+from math import ceil
 
 views = Blueprint('views', __name__)
 
@@ -61,9 +62,11 @@ def delete_show(id):
 
 @views.route('/upcoming', methods=['GET'])
 def upComing_list():
-    """ This view is displaying upcoming movies in cinema """
-    upcoming = UpComingMovies()
-    return_upcoming = upcoming.return_upcoming_movies()
+    """ This view is displaying upcoming movies in cinema
+        It has a pagination when 1 page is 1 page from API """
+    page = request.args.get('page', 1, type=int)
+    upcoming_movies = UpComingMovies().return_upcoming_movies(page=page)
     return render_template("upcoming_list.html",
-                           return_upcoming=return_upcoming,
-                           user=current_user)
+                           movies=upcoming_movies,
+                           user=current_user,
+                           current_page=page)
