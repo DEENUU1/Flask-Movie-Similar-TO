@@ -34,6 +34,7 @@ class Search:
         else:
             raise Exception("Error")
 
+
 @dataclass()
 class SimilarData:
     title: str
@@ -43,7 +44,6 @@ class SimilarData:
 
 
 class Similar:
-
     def __init__(self, query: str, type: str):
         self.search = Search(query, type)
         self.type = type
@@ -69,7 +69,7 @@ class Similar:
     def return_similar_shows(self) -> list[SimilarData]:
         """ This method returns
             title, date release, overview, photo
-            for all similar movies"""
+            for all similar movies and tv shows """
 
         if self.type == "movie":
             all_movies = []
