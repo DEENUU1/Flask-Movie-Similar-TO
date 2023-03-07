@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from similar_movies.search_movie import Similar
+from similar_movies.search_movie import Similar, UpComingMovies
 from flask_login import current_user, login_required
 from similar_movies.models import SavedMovies
 from similar_movies import db
@@ -58,3 +58,12 @@ def delete_show(id):
     flash("Show deleted from your profile", category='success')
     return redirect(url_for('auth.profile'))
 
+
+@views.route('/upcoming', methods=['GET'])
+def upComing_list():
+    """ This view is displaying upcoming movies in cinema """
+    upcoming = UpComingMovies()
+    return_upcoming = upcoming.return_upcoming_movies()
+    return render_template("upcoming_list.html",
+                           return_upcoming=return_upcoming,
+                           user=current_user)

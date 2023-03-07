@@ -99,23 +99,23 @@ class Similar:
 @dataclass()
 class UpComingData:
     title: str
-    image: str
+    poster: str
     release_date: str
+    overview: str
 
 
 class UpComingMovies:
     def __init__(self):
         self.api_key = os.getenv("MOVIEDB_API_KEY")
 
-    def search_for_upComing(self) -> List[Dict[str, Any]]:
+    def search_upcoming_movies(self) -> List[Dict[str, Any]]:
         """ This method is searching for upcoming movies available in cinema """
-        api_key = os.getenv("MOVIEDB_API_KEY")
-        base_url = f"https://api.themoviedb.org/3/movie/nowe_playing?api_key="
+        base_url = f"https://api.themoviedb.org/3/movie/now_playing?api_key="
         all_results = []
         page_number = 1
         while True:
             response = get(
-                f"{base_url}{api_key}&page={page_number}")
+                f"{base_url}{self.api_key}&page={page_number}")
             json_result = json.loads(response.content)
             if not json_result.get('results'):
                 break
@@ -124,3 +124,16 @@ class UpComingMovies:
             if page_number > 1000:
                 break
         return all_results
+
+    def return_upcoming_movies(self) -> list[UpComingData]:
+        """ This method allows to return data from API about upcoming movies """
+        all_upcoming = []
+        for upcoming in self.search_upcoming_movies():
+            upcoming_data = UpComingData(
+                title=upcoming['title'],
+                release_date=upcoming['release_date'],
+                overview=upcoming['overview'],
+                poster=upcoming['poster_path']
+            )
+            all_upcoming.append(upcoming_data)
+        return all_upcoming
