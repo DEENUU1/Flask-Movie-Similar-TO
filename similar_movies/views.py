@@ -20,7 +20,7 @@ def home():
 
 
 @views.route('/similar-movies', methods=['GET'])
-def list_similar_movie():
+def list_similar_show():
     """ This view allows to display list of similar movies or tv shows """
     title = request.args.get("title")
     type = request.args.get("type")
@@ -57,3 +57,4 @@ def delete_show(id):
     db.session.commit()
     flash("Show deleted from your profile", category='success')
     return redirect(url_for('auth.profile'))
+
