@@ -3,6 +3,7 @@ from similar_movies.search_movie import Similar, UpComingMovies
 from flask_login import current_user, login_required
 from similar_movies.models import SavedMovies
 from similar_movies import db
+from .models import Post, Category
 
 views = Blueprint('views', __name__)
 
@@ -70,3 +71,35 @@ def delete_show(id):
     return redirect(url_for('auth.profile'))
 
 
+@views.route('/create/post', methods=['POST', 'GET'])
+@login_required
+def create_post():
+    """ This view allows to create post. Only admin user are able to do it. """
+    category_list = Category.query.filter_by().all()
+    if request.method == "POST":
+        title = request.form.get("title")
+        category = request.form.get('category')
+        content = request.form.get('category')
+
+        post = Post(title=title, category=category, content=content)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('views.home'))
+    return render_template('create_post.html',
+                           user=current_user,
+                           category_list=category_list)
+
+
+@views.route('/create/category', methods=['POST', 'GET'])
+@login_required
+def create_category():
+    """ This view allows to create category for a post. Only admin user are able to do it. """
+    if request.method == "POST":
+        name = request.form.get('name')
+
+        category = Category(name=name)
+        db.session.add(category)
+        db.session.commit()
+        return redirect(url_for('views.home'))
+    return render_template('create_category.html',
+                           user=current_user)
