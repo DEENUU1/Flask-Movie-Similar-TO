@@ -8,7 +8,7 @@ from .models import User, SavedMovies
 auth = Blueprint("auth", __name__)
 
 
-@auth.route('/login', methods=['POST', 'GET'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     """ This view allows user to login """
     if request.method == 'POST':

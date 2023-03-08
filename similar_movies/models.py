@@ -19,3 +19,18 @@ class SavedMovies(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     title = db.Column(db.String(200))
     image_url = db.Column(db.String(200))
+
+
+class Category(db.Model):
+    """ This model is connected with Post model and allows to create a category for a blog post """
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+
+
+class BlogPost(db.Model):
+    """ This model allows to create blog posts """
+    id = db.Column(db.Integer, primary_key=True)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id', ondelete='CASCADE'))
+    title = db.Column(db.String(200))
+    content = db.Column(db.Text())
+
