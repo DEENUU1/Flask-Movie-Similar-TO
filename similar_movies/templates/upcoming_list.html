@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %} Similar movies to {{movie_name}} {% endblock %}
+
+{% block script %}
+    <script src="/static/js/card_animation.js" defer></script>
+{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="/static/css/upcoming_list.css" />
+{% endblock %}
+
+{% block content %}
+
+<div class="header">
+  <h1>Upcoming Movies</h1>
+</div>
+
+{% for show in movies %}
+    <div class="card">
+        <img src="https://image.tmdb.org/t/p/w500/{{show.poster}}"/>
+        <div class="card-info">
+            <h2>{{show.title}}
+            <span>({{show.release_date}})</span>
+            </h2>
+            <p>{{show.overview}}</p>
+
+            <form action="{{ url_for('views.save_show') }}" method="POST">
+                <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
+                <input type="hidden" name="poster" value="{{show.poster}}">
+                <button type="submit">Add to "Watch later" </button>
+            </form>
+
+        </div>
+    </div>
+{% endfor %}
+
+
+<div class="pagination">
+    <a href="?page{{current_page - 1 }}" class="btn btn-primary"><<</a>
+    <a href="?page={{current_page + 1}}" class="btn btn-primary">>></a>
+</div>
+
+
+
+
+{% endblock %}

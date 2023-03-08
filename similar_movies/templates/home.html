@@ -14,8 +14,14 @@
 </div>
 
 <form method="post">
-  <input type="text" id="movie_name" name="movie_name">
-  <button type="submit">Search</button>
+  <input type="text" id="title" name="title">
+  <div class="options">
+    <select name="type" id="type">
+      <option value="movie">Movie</option>
+      <option value="tv">Tv Show</option>
+    </select>
+    <button type="submit">Search</button>
+  </div>
 </form>
 
 {% endblock %}
