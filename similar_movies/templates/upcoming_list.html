@@ -8,16 +8,16 @@
 
 
 {% block style %}
-    <link rel="stylesheet" type="text/css" href="/static/css/list_similar_movie.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/upcoming_list.css" />
 {% endblock %}
 
 {% block content %}
 
 <div class="header">
-  <h1>Movies similar to {{movie_name}}</h1>
+  <h1>Upcoming Movies</h1>
 </div>
 
-{% for show in return_similar_shows %}
+{% for show in movies %}
     <div class="card">
         <img src="https://image.tmdb.org/t/p/w500/{{show.poster}}"/>
         <div class="card-info">
@@ -35,4 +35,14 @@
         </div>
     </div>
 {% endfor %}
+
+
+<div class="pagination">
+    <a href="?page{{current_page - 1 }}" class="btn btn-primary"><<</a>
+    <a href="?page={{current_page + 1}}" class="btn btn-primary">>></a>
+</div>
+
+
+
+
 {% endblock %}
