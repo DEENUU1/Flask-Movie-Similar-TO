@@ -9,7 +9,7 @@
 <header id="navbar">
 <nav class="navbar-container container">
   <a href="/" class="home-link">
-    YOUR MOVIE
+    MOVIE SIMILAR TO
   </a>
   <button type="button" id="navbar-toggle" aria-controls="navbar-menu" aria-label="Toggle menu" aria-expanded="false">
     <span class="icon-bar"></span>
@@ -18,7 +18,7 @@
   </button>
   <div id="navbar-menu" aria-labelledby="navbar-toggle">
     <ul class="navbar-links">
-      <li class="navbar-item"><a class="navbar-link" href="https://github.com/DEENUU1">GitHub</a></li>
+      <li class="navbar-item"><a class="navbar-link" href="/upcoming">Upcoming</a></li>
       {% if user.is_authenticated %}
       <li class="navbar-item"><a class="navbar-link" href="/profile">Profil</a></li>
       <li class="navbar-item"><a class="navbar-link" href="/logout">Logout</a></li>
@@ -26,6 +26,7 @@
       <li class="navbar-item"><a class="navbar-link" href="/login">Login</a></li>
       <li class="navbar-item"><a class="navbar-link" href="/signup">Sign up</a></li>
       {% endif %}
+      <li class="navbar-item"><a class="navbar-link" href="https://github.com/DEENUU1">GitHub</a></li>
     </ul>
   </div>
 </nav>

@@ -21,6 +21,11 @@ body {
     font-size: 5rem;
 }
 
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -29,6 +34,16 @@ form {
 }
 
 form input {
+    width: 810px;
+    height: 50px;
+    font-size: 20px;
+    color: black;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+}
+
+form select {
     width: 400px;
     height: 50px;
     font-size: 20px;
@@ -62,6 +77,11 @@ form button:hover {
   .header h1 {
     font-size: 2rem;
   }
+  .options {
+    display: grid;
+    grid-template-columns: 1fr ;
+}
+
   form input {
     width: 300px;
     height: 20px;

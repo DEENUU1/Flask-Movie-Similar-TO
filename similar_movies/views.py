@@ -3,7 +3,6 @@ from similar_movies.search_movie import Similar, UpComingMovies
 from flask_login import current_user, login_required
 from similar_movies.models import SavedMovies
 from similar_movies import db
-from math import ceil
 
 views = Blueprint('views', __name__)
 
@@ -14,7 +13,7 @@ def home():
     if request.method == 'POST':
         title = request.form['title']
         type = request.form['type']
-        return redirect(url_for('views.list_similar_movie', title=title, type=type))
+        return redirect(url_for('views.list_similar_show', title=title, type=type))
     else:
         return render_template('home.html',
                                user=current_user)
@@ -34,6 +33,17 @@ def list_similar_show():
                            return_similar_shows=return_similar_shows,
                            title=title,
                            user=current_user)
+
+
+@views.route('/upcoming', methods=['GET'])
+def upComing_list():
+    """ This view is displaying upcoming movies. It has a pagination when 1 page is 1 page from API """
+    page = request.args.get('page', 1, type=int)
+    upcoming_movies = UpComingMovies().return_upcoming_movies(page=page)
+    return render_template("upcoming_list.html",
+                           movies=upcoming_movies,
+                           user=current_user,
+                           current_page=page)
 
 
 @views.route('/save-show', methods=['POST'])
@@ -60,13 +70,3 @@ def delete_show(id):
     return redirect(url_for('auth.profile'))
 
 
-@views.route('/upcoming', methods=['GET'])
-def upComing_list():
-    """ This view is displaying upcoming movies in cinema
-        It has a pagination when 1 page is 1 page from API """
-    page = request.args.get('page', 1, type=int)
-    upcoming_movies = UpComingMovies().return_upcoming_movies(page=page)
-    return render_template("upcoming_list.html",
-                           movies=upcoming_movies,
-                           user=current_user,
-                           current_page=page)

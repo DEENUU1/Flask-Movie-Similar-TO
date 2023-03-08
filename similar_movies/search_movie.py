@@ -129,7 +129,6 @@ class UpComingMovies:
                 overview=upcoming['overview'],
                 poster=upcoming['poster_path'],
                 release_date=upcoming['release_date']
-
             )
             all_upcoming.append(upcoming_data)
         return all_upcoming
