@@ -1,12 +1,14 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from similar_movies.search_movie import Similar, UpComingMovies
 from flask_login import current_user, login_required
-from similar_movies.models import SavedMovies
+
 from similar_movies import db
+from similar_movies.models import SavedMovies
+from similar_movies.search_movie import Similar, UpComingMovies
 from .models import Post, Category
 
 views = Blueprint('views', __name__)
 
+""" Main views """
 
 @views.route('/', methods=['POST', 'GET'])
 def home():
@@ -45,6 +47,18 @@ def upComing_list():
                            movies=upcoming_movies,
                            user=current_user,
                            current_page=page)
+
+
+@views.route('/blog', methods=['GET'])
+def blog():
+    """ This view allows to display posts on blog """
+    posts = Post().query.filter_by().all()
+    return render_template('blog.html',
+                           posts=posts,
+                           user=current_user)
+
+
+""" Vies as a functions """
 
 
 @views.route('/save-show', methods=['POST'])
@@ -101,17 +115,6 @@ def delete_post(id):
     return redirect(url_for('views.home'))
 
 
-@views.route('/delete/category/<int:id>', methods=['POST'])
-@login_required
-def delete_category(id):
-    """ This function allows to remove category """
-    category = Category.query.get(id)
-    db.session.delete(category)
-    db.session.commit()
-    flash("Category successfully removed", category='success')
-    return redirect(url_for('views.home'))
-
-
 @views.route('/create/category', methods=['POST', 'GET'])
 @login_required
 def create_category():
@@ -127,13 +130,15 @@ def create_category():
                            user=current_user)
 
 
-@views.route('/blog', methods=['GET'])
-def blog():
-    """ This view allows to display posts on blog """
-    posts = Post().query.filter_by().all()
-    return render_template('blog.html',
-                           posts=posts,
-                           user=current_user)
+@views.route('/delete/category/<int:id>', methods=['POST'])
+@login_required
+def delete_category(id):
+    """ This function allows to remove category """
+    category = Category.query.get(id)
+    db.session.delete(category)
+    db.session.commit()
+    flash("Category successfully removed", category='success')
+    return redirect(url_for('views.home'))
 
 
 @views.route('/search', methods=['GET', 'POST'])
