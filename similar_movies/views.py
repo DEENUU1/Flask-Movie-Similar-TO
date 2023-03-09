@@ -90,6 +90,17 @@ def create_post():
                            category_list=category_list)
 
 
+@views.route('/delete/post/<int:id>', methods=['POST'])
+@login_required
+def delete_post(id):
+    """ This function allows to remove post """
+    post = Post.query.get(id)
+    db.session.delete(post)
+    db.session.commit()
+    flash("Post successfully removed", category='success')
+    return redirect(url_for('views.home'))
+
+
 @views.route('/create/category', methods=['POST', 'GET'])
 @login_required
 def create_category():
@@ -112,4 +123,13 @@ def blog():
     return render_template('blog.html',
                            posts=posts,
                            user=current_user)
+
+
+@views.route('/search', methods=['GET', 'POST'])
+def search_post():
+    if request.method == "POST":
+        search_query = request.form['query']
+        return render_template('blog_search.html',
+                               query=search_query,
+                               user=current_user)
 
