@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
+from sqlalchemy import or_
 
 from similar_movies import db
 from similar_movies.models import SavedMovies
@@ -9,6 +10,7 @@ from .models import Post, Category
 views = Blueprint('views', __name__)
 
 """ Main views """
+
 
 @views.route('/', methods=['POST', 'GET'])
 def home():
@@ -155,7 +157,9 @@ def delete_category(id):
 def search_post():
     if request.method == "POST":
         search_query = request.form['query']
+        posts = Post.query.filter(or_(Post.title.ilike(f"%{search_query}%"), Post.content.ilike(f"%{search_query}%"))).all()
         return render_template('blog_search.html',
                                query=search_query,
+                               posts=posts,
                                user=current_user)
 

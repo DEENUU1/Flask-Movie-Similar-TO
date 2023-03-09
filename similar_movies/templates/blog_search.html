@@ -17,17 +17,17 @@
   <h1>Blog</h1>
 </div>
 
+{% if posts %}
+    {% for post in posts %}
+        <div class="card">
+            <div class="card-info">
+                <h2>{{post.title}}
+                <span>({{post.date_create}})</span>
 
-{% for post in query %}
-    <div class="card">
-        <div class="card-info">
-            <h2>{{post.title}}
-            <span>({{post.date_create}})</span>
-
-            </h2>
-            <p>{{post.content}}</p>
+                </h2>
+                <p>{{post.content}}</p>
+            </div>
         </div>
-    </div>
-{% endfor %}
-
+    {% endfor %}
+{% endif %}
 {% endblock %}
