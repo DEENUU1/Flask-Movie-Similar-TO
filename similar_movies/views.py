@@ -103,3 +103,13 @@ def create_category():
         return redirect(url_for('views.home'))
     return render_template('create_category.html',
                            user=current_user)
+
+
+@views.route('/blog', methods=['GET'])
+def blog():
+    """ This view allows to display posts on blog """
+    posts = Post().query.filter_by().all()
+    return render_template('blog.html',
+                           posts=posts,
+                           user=current_user)
+

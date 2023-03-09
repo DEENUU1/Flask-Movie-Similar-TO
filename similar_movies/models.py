@@ -37,3 +37,4 @@ class Post(db.Model):
     title = db.Column(db.String(200))
     content = db.Column(db.Text())
     date_create = db.Column(db.DateTime(timezone=True), default=func.now())
+    category = db.relationship('Category', backref='posts')
