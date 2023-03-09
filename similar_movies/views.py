@@ -101,6 +101,17 @@ def delete_post(id):
     return redirect(url_for('views.home'))
 
 
+@views.route('/delete/category/<int:id>', methods=['POST'])
+@login_required
+def delete_category(id):
+    """ This function allows to remove category """
+    category = Category.query.get(id)
+    db.session.delete(category)
+    db.session.commit()
+    flash("Category successfully removed", category='success')
+    return redirect(url_for('views.home'))
+
+
 @views.route('/create/category', methods=['POST', 'GET'])
 @login_required
 def create_category():
