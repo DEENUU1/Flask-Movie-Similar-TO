@@ -75,13 +75,13 @@ def delete_show(id):
 @login_required
 def create_post():
     """ This view allows to create post. Only admin user are able to do it. """
-    category_list = Category.query.filter_by().all()
+    category_list = Category.query.all()
     if request.method == "POST":
         title = request.form.get("title")
-        category = request.form.get('category')
-        content = request.form.get('category')
+        category_id = request.form.get('category')
+        content = request.form.get('content')
 
-        post = Post(title=title, category=category, content=content)
+        post = Post(title=title, category_id=category_id, content=content)
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('views.home'))

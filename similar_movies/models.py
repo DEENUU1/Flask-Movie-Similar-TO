@@ -29,6 +29,7 @@ class Category(db.Model):
     def __str__(self):
         return self.name
 
+
 class Post(db.Model):
     """ This model allows to create blog posts """
     id = db.Column(db.Integer, primary_key=True)

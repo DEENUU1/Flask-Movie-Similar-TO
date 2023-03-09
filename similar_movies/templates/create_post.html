@@ -12,18 +12,18 @@
 
 <form method="POST">
     <label for="category_list">Post category</label>
-    <select name="category_list" id="category_list">
+    <select name="category" id="category_list">
       {% for category in category_list %}
-        <option value="category">{{category}}</option>
+        <option value={{category.id}}>{{category.name}}</option>
       {% endfor %}
     </select>
-    <input type="text" id="category" name="category" class="form-control">
 
     <label for="title">Post title</label>
     <input type="text" id="title" name="title" class="form-control">
 
     <label for="content">Post content</label>
     <input type="text" id="content" name="content" class="form-control">
+    <button type="submit">Create</button>
 </form>
 
 
