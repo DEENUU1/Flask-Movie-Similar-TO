@@ -89,19 +89,24 @@ def delete_show(id):
 @login_required
 def create_post():
     """ This view allows to create post. Only admin user are able to do it. """
-    category_list = Category.query.all()
-    if request.method == "POST":
-        title = request.form.get("title")
-        category_id = request.form.get('category')
-        content = request.form.get('content')
+    id = current_user.id
+    if id == 1:
+        category_list = Category.query.all()
+        if request.method == "POST":
+            title = request.form.get("title")
+            category_id = request.form.get('category')
+            content = request.form.get('content')
 
-        post = Post(title=title, category_id=category_id, content=content)
-        db.session.add(post)
-        db.session.commit()
+            post = Post(title=title, category_id=category_id, content=content)
+            db.session.add(post)
+            db.session.commit()
+            return redirect(url_for('auth.admin'))
+        return render_template('create_post.html',
+                               user=current_user,
+                               category_list=category_list)
+    else:
+        flash("You are not a admin user", category='error')
         return redirect(url_for('views.home'))
-    return render_template('create_post.html',
-                           user=current_user,
-                           category_list=category_list)
 
 
 @views.route('/delete/post/<int:id>', methods=['POST'])
@@ -112,22 +117,27 @@ def delete_post(id):
     db.session.delete(post)
     db.session.commit()
     flash("Post successfully removed", category='success')
-    return redirect(url_for('views.home'))
+    return redirect(url_for('auth.admin'))
 
 
 @views.route('/create/category', methods=['POST', 'GET'])
 @login_required
 def create_category():
     """ This view allows to create category for a post. Only admin user are able to do it. """
-    if request.method == "POST":
-        name = request.form.get('name')
+    id = current_user.id
+    if id == 1:
+        if request.method == "POST":
+            name = request.form.get('name')
 
-        category = Category(name=name)
-        db.session.add(category)
-        db.session.commit()
+            category = Category(name=name)
+            db.session.add(category)
+            db.session.commit()
+            return redirect(url_for('auth.admin'))
+        return render_template('create_category.html',
+                               user=current_user)
+    else:
+        flash("You are not a admin user", category='error')
         return redirect(url_for('views.home'))
-    return render_template('create_category.html',
-                           user=current_user)
 
 
 @views.route('/delete/category/<int:id>', methods=['POST'])
@@ -138,7 +148,7 @@ def delete_category(id):
     db.session.delete(category)
     db.session.commit()
     flash("Category successfully removed", category='success')
-    return redirect(url_for('views.home'))
+    return redirect(url_for('auth.admin'))
 
 
 @views.route('/search', methods=['GET', 'POST'])

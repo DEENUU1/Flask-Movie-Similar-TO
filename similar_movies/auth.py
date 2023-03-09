@@ -84,9 +84,14 @@ def profile():
 def admin():
     """ This view display admin dashboard
         admin user is available to delete posts and categories """
-    posts = Post().query.filter_by().all()
-    categories = Category().query.filter_by().all()
-    return render_template('admin.html',
-                           posts=posts,
-                           categories=categories,
-                           user=current_user)
+    id = current_user.id
+    if id == 1:
+        posts = Post().query.filter_by().all()
+        categories = Category().query.filter_by().all()
+        return render_template('admin.html',
+                               posts=posts,
+                               categories=categories,
+                               user=current_user)
+    else:
+        flash("You are not a admin user", category='error')
+        return redirect(url_for('views.home'))
