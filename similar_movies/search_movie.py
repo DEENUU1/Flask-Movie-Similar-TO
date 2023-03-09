@@ -1,9 +1,10 @@
-from requests import get
-from dotenv import load_dotenv
-import os
 import json
+import os
 from dataclasses import dataclass
 from typing import List, Dict, Any
+
+from dotenv import load_dotenv
+from requests import get
 
 load_dotenv()
 
@@ -132,6 +133,3 @@ class UpComingMovies:
             )
             all_upcoming.append(upcoming_data)
         return all_upcoming
-
-
-

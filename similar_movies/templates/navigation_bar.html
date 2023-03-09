@@ -19,6 +19,10 @@
   <div id="navbar-menu" aria-labelledby="navbar-toggle">
     <ul class="navbar-links">
       <li class="navbar-item"><a class="navbar-link" href="/upcoming">Upcoming</a></li>
+      <li class="navbar-item"><a class="navbar-link" href="/blog">Blog</a></li>
+      {% if current_user.id == 1 %}
+      <li class="navbar-item"><a class="navbar-link" href="/admin">Admin</a></li>
+      {% endif %}
       {% if user.is_authenticated %}
       <li class="navbar-item"><a class="navbar-link" href="/profile">Profil</a></li>
       <li class="navbar-item"><a class="navbar-link" href="/logout">Logout</a></li>

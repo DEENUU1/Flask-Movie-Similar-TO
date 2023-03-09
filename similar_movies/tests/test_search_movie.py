@@ -1,17 +1,17 @@
 import pytest
 from requests import Response
 from unittest import mock
-from similar_movies.search_movie import SearchMovie, SimilarMovieData
+from similar_movies.search_movie import Search, SimilarData, UpComingData
 
 
 @pytest.fixture
 def mock_search_movie():
-    return SearchMovie("Ant man and the wasp")
+    return Search("Ant man and the wasp", "movie")
 
 
 @pytest.fixture
 def movie_search():
-    return SearchMovie("Ant man and the wasp")
+    return Search("Ant man and the wasp", "movie")
 
 
 def test_create_query(mock_search_movie):
@@ -26,14 +26,25 @@ def mocked_requests_get(*args):
 @mock.patch("requests.get", side_effect=mocked_requests_get)
 def test_return_movie_id(mock_get, movie_search):
     movie_search.query = "The Transporter"
-    assert movie_search.return_movie_id == "4108"
+    assert movie_search.return_id == "4108"
 
 
 def test_similar_movie_data_class():
-    data = SimilarMovieData("Ant man", "Short overview", "20.06.2018", "/poster.png")
+    data = SimilarData("Ant man", "Short overview", "20.06.2018", "/poster.png")
     assert data.title == "Ant man"
     assert data.overview == "Short overview"
     assert data.release_date == "20.06.2018"
     assert data.poster == "/poster.png"
 
 
+def test_up_coming_data_class():
+    up_coming_movie = UpComingData(
+        title="test",
+        poster="/abcdefg",
+        overview="test overview",
+        release_date="23.01.2023"
+    )
+    assert up_coming_movie.title == "test"
+    assert up_coming_movie.poster == '/abcdefg'
+    assert up_coming_movie.overview == 'test overview'
+    assert up_coming_movie.release_date == "23.01.2023"
