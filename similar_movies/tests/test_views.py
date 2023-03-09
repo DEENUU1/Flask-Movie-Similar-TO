@@ -1,22 +1,72 @@
 from similar_movies import create_app
+import pytest
 
 
-def test_home_view():
+@pytest.fixture(scope='module')
+def test_client():
+    flask_app = create_app()
+    with flask_app.test_client() as testing_client:
+        with flask_app.app_context():
+            yield testing_client
+
+
+def test_home_view(test_client):
     """ Test for the main view status code
         pass if status code is equal to 200 """
-    flask_app = create_app()
 
-    with flask_app.test_client() as test_client:
-        response = test_client.get('/')
-        assert response.status_code == 200
+    response = test_client.get('/')
+    assert response.status_code == 200
 
 
-def test_list_similar_movies_view():
+def test_list_similar_shows_view(test_client):
     """ Test for view with similar movie list
         pass if status code is equal to 200"""
-    flask_app = create_app()
+    response = test_client.get('/similar', query_string={'title': 'The Matrix',
+                                                         'type': 'movie'})
+    assert response.status_code == 200
 
-    with flask_app.test_client() as test_client:
-        response = test_client.get('/similar', query_string={'movie_name': 'The Matrix'})
-        assert response.status_code == 200
 
+def test_blog_view(test_client):
+    """ Test to check blog view status code """
+    response = test_client.get('/blog')
+    assert response.status_code == 200
+    assert b"Blog" in response.data
+
+
+def test_upComing_list_view(test_client):
+    """ Test to check upComing_list view status code """
+    response = test_client.get('/upcoming')
+    assert response.status_code == 200
+    assert b"Upcoming" in response.data
+
+
+def test_save_show_view(test_client):
+    """ Test to check save_show view status code
+        It should return status code 302 becouse it
+        redirect to 'auth.profile' """
+    response = test_client.post('/save-show')
+    assert response.status_code == 302
+
+
+def test_delete_show_view(test_client):
+    """ Test to check delete_show view status code
+        It should return status code 302 becouse it
+        redirect to 'auth.profile' """
+    response = test_client.post('/delete-show/1')
+    assert response.status_code == 302
+
+
+def test_delete_post_view(test_client):
+    """ Test to check delete_post view status code
+        It should return status code 302 becouse it
+        redirect to 'auth.profile' """
+    response = test_client.post('/delete/post/1')
+    assert response.status_code == 302
+
+
+def test_delete_category_view(test_client):
+    """ Test to check delete_category view status code
+        It should return status code 302 becouse it
+        redirect to 'auth.profile' """
+    response = test_client.post('/delete/category/1')
+    assert response.status_code == 302

@@ -3,12 +3,12 @@ from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from similar_movies import db
-from .models import User, SavedMovies
+from .models import User, SavedMovies, Post, Category
 
 auth = Blueprint("auth", __name__)
 
 
-@auth.route('/login', methods=['POST', 'GET'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     """ This view allows user to login """
     if request.method == 'POST':
@@ -73,6 +73,25 @@ def logout():
 @auth.route('/profile')
 @login_required
 def profile():
-    """ This view displays user's profile """
+    """ This view displays user's profile
+        user can display and delete saved movies and tv shows """
     saved_shows = SavedMovies.query.filter_by(user_id=current_user.id).all()
     return render_template("profile.html", saved_shows=saved_shows, user=current_user)
+
+
+@auth.route('/admin')
+@login_required
+def admin():
+    """ This view display admin dashboard
+        admin user is available to delete posts and categories """
+    id = current_user.id
+    if id == 1:
+        posts = Post().query.filter_by().all()
+        categories = Category().query.filter_by().all()
+        return render_template('admin.html',
+                               posts=posts,
+                               categories=categories,
+                               user=current_user)
+    else:
+        flash("You are not a admin user", category='error')
+        return redirect(url_for('views.home'))

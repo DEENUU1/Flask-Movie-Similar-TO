@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %} Blog {% endblock %}
+
+{% block script %}
+    <script src="/static/js/card_animation.js" defer></script>
+{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="/static/css/blog.css" />
+{% endblock %}
+
+{% block content %}
+
+<div class="header">
+  <h1>Blog</h1>
+</div>
+
+<form action="{{url_for('views.search_post') }}" method="POST">
+    <input type="text" id="query" name="query">
+    <button type="submit">Search</button>
+</form>
+
+{% for post in posts %}
+    <div class="card">
+        <div class="card-info">
+            <h2>{{post.title}}
+            <span>({{post.date_create}})</span>
+            <span>{{post.category.name}}</span>
+            </h2>
+            <p>{{post.content}}</p>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}
