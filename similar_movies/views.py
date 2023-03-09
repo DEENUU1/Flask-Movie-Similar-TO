@@ -24,7 +24,7 @@ def home():
                                user=current_user)
 
 
-@views.route('/similar-movies', methods=['GET'])
+@views.route('/similar', methods=['GET'])
 def list_similar_show():
     """ This view allows to display list of similar movies or tv shows """
     title = request.args.get("title")
@@ -155,6 +155,8 @@ def delete_category(id):
 
 @views.route('/search', methods=['GET', 'POST'])
 def search_post():
+    """ This function allows to search posts
+        query is searching for a pattern in post title and post content """
     if request.method == "POST":
         search_query = request.form['query']
         posts = Post.query.filter(or_(Post.title.ilike(f"%{search_query}%"), Post.content.ilike(f"%{search_query}%"))).all()

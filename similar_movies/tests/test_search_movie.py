@@ -1,7 +1,7 @@
 import pytest
 from requests import Response
 from unittest import mock
-from similar_movies.search_movie import Search, SimilarData
+from similar_movies.search_movie import Search, SimilarData, UpComingData
 
 
 @pytest.fixture
@@ -37,3 +37,14 @@ def test_similar_movie_data_class():
     assert data.poster == "/poster.png"
 
 
+def test_up_coming_data_class():
+    up_coming_movie = UpComingData(
+        title="test",
+        poster="/abcdefg",
+        overview="test overview",
+        release_date="23.01.2023"
+    )
+    assert up_coming_movie.title == "test"
+    assert up_coming_movie.poster == '/abcdefg'
+    assert up_coming_movie.overview == 'test overview'
+    assert up_coming_movie.release_date == "23.01.2023"

@@ -133,6 +133,3 @@ class UpComingMovies:
             )
             all_upcoming.append(upcoming_data)
         return all_upcoming
-
-
-
