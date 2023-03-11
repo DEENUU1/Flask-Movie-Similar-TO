@@ -10,18 +10,19 @@
 
 {% block content %}
 <div class="header">
-  <h1>Find similar movie to:</h1>
+  <h1>Search for another great show</h1>
 </div>
 
-<form method="post">
-  <input type="text" id="title" name="title" required>
-  <div class="options">
-    <select name="type" id="type">
-      <option value="movie">Movie</option>
-      <option value="tv">Tv Show</option>
-    </select>
-    <button type="submit">Search</button>
-  </div>
-</form>
+<div class="container">
+    <form method="post">
+      <input type="text" id="title" name="title" placeholder="Enter a movie or TV show title" required>
+      <select name="type" id="type">
+        <option value="movie">Movie</option>
+        <option value="tv">TV Show</option>
+      </select>
+  <button type="submit">Search</button>
+    </form>
+</div>
+
 
 {% endblock %}
