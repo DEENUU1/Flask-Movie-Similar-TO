@@ -81,3 +81,11 @@ def test_create_post_normal_user(test_client):
     assert response.status_code == 302
 
 
+def test_create_category_normal_user(test_client):
+    """ Test to check if for normal user is not able to see
+        view create_category app will move user on view "home" because normal user
+        does not have access. Because of that it should return
+        status code 302 and flash message """
+    response = test_client.get('/create/category')
+    assert response.status_code == 302
+
