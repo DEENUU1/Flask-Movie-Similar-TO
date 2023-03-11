@@ -4,6 +4,9 @@ body {
   padding: 0;
   margin: 0;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 :root {
   --bg-color: hsl(0, 0%, 15%);

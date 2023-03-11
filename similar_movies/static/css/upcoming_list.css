@@ -5,6 +5,7 @@ body {
   padding: 0;
   margin: 0;
 }
+
 .header {
     display: flex;
     justify-content: center;
@@ -58,6 +59,21 @@ body {
 
 .card-info h2 {
   margin-top: 0;
+}
+
+button {
+    background-color: black;
+    color: white;
+    padding: 20px 30px;
+    font-weight: 600;
+    border: #CECECE;
+    border-width: 5px;
+    border-style: outset;
+}
+
+button:hover {
+    border-color: #70D800;
+    border-width: 6px;
 }
 
 @media only screen and (max-width: 768px) {

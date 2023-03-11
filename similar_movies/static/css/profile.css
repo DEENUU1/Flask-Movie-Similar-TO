@@ -72,7 +72,7 @@ button {
 }
 
 button:hover {
-    border-color: #70D800;
+    border-color: red;
     border-width: 6px;
 }
 
