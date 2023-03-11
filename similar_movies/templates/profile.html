@@ -4,39 +4,35 @@
 {% block title %}Find similar film{% endblock %}
 
 {% block style %}
-<!--  <link rel="stylesheet" type="text/css" href="/static/css/login.css" />-->
+  <link rel="stylesheet" type="text/css" href="/static/css/list_similar_movie.css" />
 {% endblock %}
 
+{% block script %}
+    <script src="/static/js/card_animation.js" defer></script>
+{% endblock %}
 
 {% block content %}
 
-<h1>User profile</h1>
-<h2>Saved shows</h2>
+<div class="header">
+    <h1 class="header-title">Twój profil</h1>
+</div>
 
+{% for show in saved_shows %}
+    <div class="card">
+        <img src="https://image.tmdb.org/t/p/w500/{{show.image_url}}"/>
+        <div class="card-info">
+            <h2>{{show.title}}</h2>
 
-
-
-<table>
-    <tr>
-        <td>Image</td>
-        <td>Title</td>
-        <td>Delete</td>
-    </tr>
-    {% for show in saved_shows %}
-    <tr>
-        <td><img style="width: 150px;height:200px;" src="https://image.tmdb.org/t/p/w500/{{show.image_url}}"/></td>
-        <td><h2>{{show.title}}</h2></td>
-        <td>
             <form action="{{ url_for('views.delete_show', id=show.id) }}" method="POST">
-            <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
-            <input type="hidden" name="poster" value="{{show.poster}}">
-            <button type="submit">Delete from "Watch later"</button>
+                <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
+                <input type="hidden" name="poster" value="{{show.poster}}">
+                <button type="submit">Delete from "Watch later"</button>
             </form>
-        </td>
-    </tr>
 
-    {% endfor %}
-</table>
+        </div>
+    </div>
+{% endfor %}
+
 
 
 {% endblock %}
