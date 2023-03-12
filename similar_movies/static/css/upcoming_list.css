@@ -5,6 +5,7 @@ body {
   padding: 0;
   margin: 0;
 }
+
 .header {
     display: flex;
     justify-content: center;
@@ -38,16 +39,12 @@ body {
   padding: 20px;
   border-style: solid;
   margin-top: 20px;
-  transform: translateX(400%);
-  transition: transform 0.3s ease;
-}
-
-.card:nth-of-type(even) {
-  transform: translateX(-400%);
+  opacity: 0;
+  transition: opacity 1s ease;
 }
 
 .card.show {
-  transform: translateX(0);
+  opacity: 1;
 }
 
 .card img {
@@ -62,6 +59,21 @@ body {
 
 .card-info h2 {
   margin-top: 0;
+}
+
+button {
+    background-color: black;
+    color: white;
+    padding: 20px 30px;
+    font-weight: 600;
+    border: #CECECE;
+    border-width: 5px;
+    border-style: outset;
+}
+
+button:hover {
+    border-color: #70D800;
+    border-width: 6px;
 }
 
 @media only screen and (max-width: 768px) {

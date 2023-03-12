@@ -29,7 +29,7 @@
             <form action="{{ url_for('views.save_show') }}" method="POST">
                 <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
                 <input type="hidden" name="poster" value="{{show.poster}}">
-                <button type="submit">Add to "Watch later" </button>
+                <button type="submit">Watch later </button>
             </form>
 
         </div>
