@@ -91,12 +91,8 @@ def admin():
         admin user is available to delete posts and categories """
     id = current_user.id
     if id == 1:
-        # posts = Post().query.filter_by().all()
-        # categories = Category().query.filter_by().all()
         available_users = User.query.filter_by().all()
         return render_template('admin.html',
-                               # posts=posts,
-                               # categories=categories,
                                user=current_user,
                                available_users=available_users)
     else:
