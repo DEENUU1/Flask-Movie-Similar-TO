@@ -5,23 +5,41 @@ body {
   padding: 0;
   margin: 0;
 }
-.header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    margin-top: 50px;
-}
 
-.header h1 {
-    color: white;
-    text-shadow: 5px 5px 10px black;
-    font-size: 3rem;
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
-
-@media only screen and (max-width: 768px) {
-  .header h1 {
-    font-size: 2rem;
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px 0 0 5px;
+  border: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  font-size: 20px;
+}
+button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #3e8e41;
+}
+@media screen and (max-width: 600px) {
+  input[type="text"], select, button {
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
   }
 }
 .card {

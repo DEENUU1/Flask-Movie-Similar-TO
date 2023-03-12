@@ -4,16 +4,17 @@
 {% block title %}Find similar film{% endblock %}
 
 {% block style %}
-
+    <link rel="stylesheet" type="text/css" href="/static/css/admin.css" />
 {% endblock %}
 
 
 {% block content %}
 
-<h1>Admin dashboard</h1>
+<h1 class="header">Admin dashboard</h1>
 
-<h2>Posts</h2>
+<h2 class="header">Posts</h2>
 <a href="/create/post">Create a new post</a>
+
 <table>
     <tr>
         <td>Title</td>
@@ -21,17 +22,17 @@
     </tr>
     {% for post in posts %}
     <tr>
-        <td><h2>{{post.title}}</h2></td>
+        <td><p>{{post.title}}</p></td>
         <td>
             <form action="{{ url_for('views.delete_post', id=post.id) }}" method="POST">
-                <button type="submit">Delete post</button>
+                <button class="delete" type="submit">Delete post</button>
             </form>
         </td>
     </tr>
     {% endfor %}
 </table>
 
-<h2>Category</h2>
+<h2 class="header">Category</h2>
 <a href="/create/category">Create a new category</a>
 <table>
     <tr>
@@ -40,10 +41,10 @@
     </tr>
     {% for category in categories %}
     <tr>
-        <td><h2>{{category.name}}</h2></td>
+        <td><p>{{category.name}}</p></td>
         <td>
             <form action="{{ url_for('views.delete_category', id=category.id) }}" method="POST">
-                <button type="submit">Delete category</button>
+                <button class="delete" type="submit">Delete category</button>
             </form>
         </td>
     </tr>
@@ -51,7 +52,7 @@
 </table>
 
 
-<h2>Users</h2>
+<h2 class="header">Users</h2>
 <table>
     <tr>
         <td>ID</td>
@@ -69,13 +70,13 @@
         <td>{{user.date_created}}</td>
         <td>
             <form action="{{ url_for('auth.delete_user', id=user.id) }}" method="POST">
-                <button type="submit">Delete user</button>
+                <button class="delete" type="submit">Delete user</button>
             </form>
         </td>
         <td>
             <form action="{{ url_for('auth.send_message', id=user.id) }}" method="POST">
                 <input type="text" name="message">
-                <button type="submit">Send message</button>
+                <button class="send" type="submit">Send message</button>
             </form>
         </td>
     </tr>

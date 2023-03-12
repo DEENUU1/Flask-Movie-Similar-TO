@@ -1,0 +1,45 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+td, th {
+  border: 0.5px solid black;
+  padding: 0.5rem;
+}
+.delete {
+    background-color: black;
+    color: white;
+    padding: 10px 15px;
+    font-weight: 600;
+    border: #CECECE;
+    border-width: 5px;
+    border-style: outset;
+}
+.delete:hover {
+    border-color: red;
+    border-width: 6px;
+}
+.send {
+    background-color: black;
+    color: white;
+    padding: 10px 15px;
+    font-weight: 600;
+    border: #CECECE;
+    border-width: 5px;
+    border-style: outset;
+}
+.send:hover {
+    border-color: #70D800;
+    border-width: 6px;
+}
+input[type="text"] {
+  padding: 0.5rem;
+  border: 1px solid black;
+  font-size: 1rem;
+}
