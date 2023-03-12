@@ -8,13 +8,13 @@
 
 
 {% block style %}
-    <link rel="stylesheet" type="text/css" href="/static/css/upcoming_list.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/cards.css" />
 {% endblock %}
 
 {% block content %}
 
-<div class="header">
-  <h1>Upcoming Movies</h1>
+<div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold">Upcoming movies</h1>
 </div>
 
 {% for show in movies %}
@@ -29,7 +29,7 @@
             <form action="{{ url_for('views.save_show') }}" method="POST">
                 <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
                 <input type="hidden" name="poster" value="{{show.poster}}">
-                <button type="submit">Watch later</button>
+                <button type="button" class="btn btn-success">Watch Later</button>
             </form>
 
         </div>
