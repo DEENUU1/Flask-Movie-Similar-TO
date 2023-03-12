@@ -1,37 +1,34 @@
-
-{% block script %}
-<script src="/static/js/navigation_bar.js" defer></script>
-{% endblock %}
-
-{% block style %}
-  <link rel="stylesheet" type="text/css" href="/static/css/navigation_bar.css" />
-{% endblock %}
-
-<header id="navbar">
-<nav class="navbar-container container">
-  <a href="/" class="home-link">
-    MOVIE SIMILAR TO
-  </a>
-  <button type="button" id="navbar-toggle" aria-controls="navbar-menu" aria-label="Toggle menu" aria-expanded="false">
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-  </button>
-  <div id="navbar-menu" aria-labelledby="navbar-toggle">
-    <ul class="navbar-links">
-      <li class="navbar-item"><a class="navbar-link" href="/upcoming">Upcoming</a></li>
-      <li class="navbar-item"><a class="navbar-link" href="/blog">Blog</a></li>
-      {% if current_user.id == 1 %}
-      <li class="navbar-item"><a class="navbar-link" href="/admin">Admin</a></li>
-      {% endif %}
-      {% if user.is_authenticated %}
-      <li class="navbar-item"><a class="navbar-link" href="/profile">Profil</a></li>
-      <li class="navbar-item"><a class="navbar-link" href="/logout">Logout</a></li>
-      {% else %}
-      <li class="navbar-item"><a class="navbar-link" href="/login">Login</a></li>
-      <li class="navbar-item"><a class="navbar-link" href="/signup">Sign up</a></li>
-      {% endif %}
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">MovieSimilarTo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="/upcoming">Upcoming</a>
+        </li>
+        {% if current_user.id == 1 %}
+        <li class="nav-item">
+          <a class="nav-link active" href="/admin">Admin</a>
+        </li>
+        {% endif %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Account
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            {% else %}
+            <li><a class="dropdown-item" href="/login">Login</a></li>
+            <li><a class="dropdown-item" href="/signup">Sign up</a></li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
-</header>

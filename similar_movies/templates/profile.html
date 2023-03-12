@@ -4,7 +4,7 @@
 {% block title %}Find similar film{% endblock %}
 
 {% block style %}
-  <link rel="stylesheet" type="text/css" href="/static/css/profile.css" />
+  <link rel="stylesheet" type="text/css" href="/static/css/cards.css" />
 {% endblock %}
 
 {% block script %}
@@ -13,8 +13,8 @@
 
 {% block content %}
 
-<div class="header">
-    <h1 class="header-title">Saved movies  </h1>
+<div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold">Hello {{user.username}}</h1>
 </div>
 
 {% for show in saved_shows %}
@@ -26,7 +26,7 @@
             <form action="{{ url_for('views.delete_show', id=show.id) }}" method="POST">
                 <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
                 <input type="hidden" name="poster" value="{{show.poster}}">
-                <button type="submit">Delete from Watch later</button>
+                <button type="button" class="btn btn-danger">Delete from Watch Later</button>
             </form>
 
         </div>

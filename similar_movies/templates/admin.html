@@ -4,51 +4,41 @@
 {% block title %}Find similar film{% endblock %}
 
 {% block style %}
-
+    <link rel="stylesheet" type="text/css" href="/static/css/admin.css" />
 {% endblock %}
 
 
 {% block content %}
 
-<h1>Admin dashboard</h1>
+<div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold">Admin dashboard</h1>
+</div>
 
-<h2>Posts</h2>
-<a href="/create/post">Create a new post</a>
-<table>
+
+<table class="table table-dark">
     <tr>
-        <td>Title</td>
-        <td>Delete</td>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Email</td>
+        <td>Date created</td>
+        <td>Delete User</td>
+        <td>Send message</td>
     </tr>
-    {% for post in posts %}
+    {% for user in available_users %}
     <tr>
-        <td><h2>{{post.title}}</h2></td>
+        <td>{{user.id}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.date_created}}</td>
         <td>
-            <form action="{{ url_for('views.delete_post', id=post.id) }}" method="POST">
-                <input type="hidden" name="title" value="{{ post.title }}">
-                <input type="hidden" name="poster" value="{{ post.content }}">
-                <input type="hidden" name="poster" value="{{ post.date_create }}">
-                <input type="hidden" name="poster" value="{{ post.category.name }}">
-                <button type="submit">Delete post</button>
+            <form action="{{ url_for('auth.delete_user', id=user.id) }}" method="POST">
+                <button class="btn btn-danger" type="submit">Delete user</button>
             </form>
         </td>
-    </tr>
-    {% endfor %}
-</table>
-
-<h2>Category</h2>
-<a href="/create/category">Create a new category</a>
-<table>
-    <tr>
-        <td>Name</td>
-        <td>Delete</td>
-    </tr>
-    {% for category in categories %}
-    <tr>
-        <td><h2>{{category.name}}</h2></td>
         <td>
-            <form action="{{ url_for('views.delete_category', id=category.id) }}" method="POST">
-                <input type="hidden" name="name" value="{{ category.name }}">
-                <button type="submit">Delete category</button>
+            <form action="{{ url_for('auth.send_message', id=user.id) }}" method="POST">
+                <input type="text" name="message">
+                <button class="btn btn-success" type="submit">Send message</button>
             </form>
         </td>
     </tr>

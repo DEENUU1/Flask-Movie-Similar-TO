@@ -3,7 +3,8 @@ from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from similar_movies import db
-from .models import User, SavedMovies, Post, Category
+from .models import User, SavedMovies
+from similar_movies.mail import send_email
 
 auth = Blueprint("auth", __name__)
 
@@ -57,6 +58,10 @@ def sign_up():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
+            send_email("Similar Movies | Sign up",
+                       "Thank you for sign up on the website.",
+                        email)
+
             return redirect(url_for('views.home'))
 
     return render_template("signup.html", user=current_user)
@@ -86,12 +91,42 @@ def admin():
         admin user is available to delete posts and categories """
     id = current_user.id
     if id == 1:
-        posts = Post().query.filter_by().all()
-        categories = Category().query.filter_by().all()
+        available_users = User.query.filter_by().all()
         return render_template('admin.html',
-                               posts=posts,
-                               categories=categories,
-                               user=current_user)
+                               user=current_user,
+                               available_users=available_users)
     else:
         flash("You are not a admin user", category='error')
         return redirect(url_for('views.home'))
+
+
+@auth.route('/delete-user/<int:id>', methods=['POST'])
+@login_required
+def delete_user(id):
+    """ This function allows to remove movie or tv show from list for login user """
+    user = User.query.get(id)
+    if user.id != 1:
+        db.session.delete(user)
+        db.session.commit()
+        flash("User deleted", category='success')
+        return redirect(url_for('auth.admin'))
+    else:
+        flash("You can't delete this account!", category='error')
+        return redirect(url_for('auth.admin'))
+
+
+@auth.route('/send-message/<int:id>', methods=['POST', 'GET'])
+@login_required
+def send_message(id):
+    """ This function allows to send email for user in admin dashboard """
+    if request.method == "POST":
+        user = User.query.get(id)
+        message = request.form.get("message")
+        send_email("Static subject",
+                   message,
+                   user.email)
+        flash("Message sent", category='success')
+        return redirect(url_for('auth.admin'))
+    else:
+        return redirect(url_for('auth.admin'))
+

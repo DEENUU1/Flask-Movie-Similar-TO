@@ -9,19 +9,26 @@
 
 
 {% block content %}
-<div class="header">
-  <h1>Search for another great show</h1>
-</div>
+<h1 class="visually-hidden">Heroes examples</h1>
+
+  <div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold">Movie Similar To</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Find similar movies in just a few clicks...</p>
+    </div>
+  </div>
 
 <div class="container">
-    <form method="post">
-      <input type="text" id="title" name="title" placeholder="Enter a movie or TV show title" required>
-      <select name="type" id="type">
-        <option value="movie">Movie</option>
-        <option value="tv">TV Show</option>
-      </select>
-  <button type="submit">Search</button>
-    </form>
+<form method="post">
+  <div class="input-group mb-3">
+    <input type="text" id="title" name="title" class="form-control" placeholder="Enter a movie or TV show title" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+    <button class="btn btn-success" type="button" id="button-addon2">Button</button>
+  </div>
+  <select class="form-select form-select-sm" name="type" id="type">
+    <option value="movie">Movie</option>
+    <option value="tv">TV Show</option>
+  </select>
+</form>
 </div>
 
 
