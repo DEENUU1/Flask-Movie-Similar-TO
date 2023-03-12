@@ -117,3 +117,19 @@ def delete_user(id):
     else:
         flash("You can't delete this account!", category='error')
         return redirect(url_for('auth.admin'))
+
+
+@auth.route('/send-message/<int:id>', methods=['POST', 'GET'])
+@login_required
+def send_message(id):
+    if request.method == "POST":
+        user = User.query.get(id)
+        message = request.form.get("message")
+        send_email("Static subject",
+                   message,
+                   user.email)
+        flash("Message sent", category='success')
+        return redirect(url_for('auth.admin'))
+    else:
+        return redirect(url_for('auth.admin'))
+

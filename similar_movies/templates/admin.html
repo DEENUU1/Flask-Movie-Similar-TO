@@ -24,10 +24,6 @@
         <td><h2>{{post.title}}</h2></td>
         <td>
             <form action="{{ url_for('views.delete_post', id=post.id) }}" method="POST">
-                <input type="hidden" name="title" value="{{ post.title }}">
-                <input type="hidden" name="poster" value="{{ post.content }}">
-                <input type="hidden" name="poster" value="{{ post.date_create }}">
-                <input type="hidden" name="poster" value="{{ post.category.name }}">
                 <button type="submit">Delete post</button>
             </form>
         </td>
@@ -47,7 +43,6 @@
         <td><h2>{{category.name}}</h2></td>
         <td>
             <form action="{{ url_for('views.delete_category', id=category.id) }}" method="POST">
-                <input type="hidden" name="name" value="{{ category.name }}">
                 <button type="submit">Delete category</button>
             </form>
         </td>
@@ -64,6 +59,7 @@
         <td>Email</td>
         <td>Date created</td>
         <td>Delete User</td>
+        <td>Send message</td>
     </tr>
     {% for user in available_users %}
     <tr>
@@ -73,10 +69,13 @@
         <td>{{user.date_created}}</td>
         <td>
             <form action="{{ url_for('auth.delete_user', id=user.id) }}" method="POST">
-                <input type="hidden" name="name" value="{{ user.username }}">
-                <input type="hidden" name="name" value="{{ user.id }}">
-                <input type="hidden" name="name" value="{{ user.email }}">
                 <button type="submit">Delete user</button>
+            </form>
+        </td>
+        <td>
+            <form action="{{ url_for('auth.send_message', id=user.id) }}" method="POST">
+                <input type="text" name="message">
+                <button type="submit">Send message</button>
             </form>
         </td>
     </tr>
