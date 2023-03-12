@@ -13,22 +13,21 @@
 
 {% block content %}
 
-<div class="header">
-  <h1>Blog</h1>
+<div class="container">
+    <form action="{{url_for('views.search_post') }}" method="POST">
+        <input type="text" id="query" name="query">
+        <button type="submit">Search</button>
+    </form>
 </div>
 
-<form action="{{url_for('views.search_post') }}" method="POST">
-    <input type="text" id="query" name="query">
-    <button type="submit">Search</button>
-</form>
+
 
 {% for post in posts %}
     <div class="card">
         <div class="card-info">
-            <h2>{{post.title}}
-            <span>({{post.date_create}})</span>
+            <h2>{{post.title}}</h2>
             <span>{{post.category.name}}</span>
-            </h2>
+            <span>({{post.date_create}})</span>
             <p>{{post.content}}</p>
         </div>
     </div>
