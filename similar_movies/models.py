@@ -12,6 +12,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
 
+    def __str__(self):
+        return self.username
 
 class SavedMovies(db.Model):
     """ This model allows to save movies in user's profile """

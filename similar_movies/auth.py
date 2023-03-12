@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from similar_movies import db
 from .models import User, SavedMovies, Post, Category
+from similar_movies.mail import send_email
 
 auth = Blueprint("auth", __name__)
 
@@ -57,6 +58,10 @@ def sign_up():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
+            send_email("Similar Movies | Sign up",
+                       "Thank you for sign up on the website.",
+                        email)
+
             return redirect(url_for('views.home'))
 
     return render_template("signup.html", user=current_user)
