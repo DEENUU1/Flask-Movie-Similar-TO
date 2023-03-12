@@ -26,7 +26,7 @@
             <form action="{{ url_for('views.delete_show', id=show.id) }}" method="POST">
                 <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
                 <input type="hidden" name="poster" value="{{show.poster}}">
-                <button type="button" class="btn btn-danger">Delete from Watch Later</button>
+                <button type="submit" class="btn btn-danger">Delete from Watch Later</button>
             </form>
 
         </div>
