@@ -93,10 +93,27 @@ def admin():
     if id == 1:
         posts = Post().query.filter_by().all()
         categories = Category().query.filter_by().all()
+        available_users = User.query.filter_by().all()
         return render_template('admin.html',
                                posts=posts,
                                categories=categories,
-                               user=current_user)
+                               user=current_user,
+                               available_users=available_users)
     else:
         flash("You are not a admin user", category='error')
         return redirect(url_for('views.home'))
+
+
+@auth.route('/delete-user/<int:id>', methods=['POST'])
+@login_required
+def delete_user(id):
+    """ This function allows to remove movie or tv show from list for login user """
+    user = User.query.get(id)
+    if user.id != 1:
+        db.session.delete(user)
+        db.session.commit()
+        flash("User deleted", category='success')
+        return redirect(url_for('auth.admin'))
+    else:
+        flash("You can't delete this account!", category='error')
+        return redirect(url_for('auth.admin'))

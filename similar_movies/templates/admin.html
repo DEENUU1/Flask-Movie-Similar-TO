@@ -56,4 +56,32 @@
 </table>
 
 
+<h2>Users</h2>
+<table>
+    <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Email</td>
+        <td>Date created</td>
+        <td>Delete User</td>
+    </tr>
+    {% for user in available_users %}
+    <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.date_created}}</td>
+        <td>
+            <form action="{{ url_for('auth.delete_user', id=user.id) }}" method="POST">
+                <input type="hidden" name="name" value="{{ user.username }}">
+                <input type="hidden" name="name" value="{{ user.id }}">
+                <input type="hidden" name="name" value="{{ user.email }}">
+                <button type="submit">Delete user</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
 {% endblock %}
