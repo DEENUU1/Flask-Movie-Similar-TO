@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from similar_movies import db
-from .models import User, SavedMovies, Post, Category
+from .models import User, SavedMovies
 from similar_movies.mail import send_email
 
 auth = Blueprint("auth", __name__)
@@ -91,12 +91,12 @@ def admin():
         admin user is available to delete posts and categories """
     id = current_user.id
     if id == 1:
-        posts = Post().query.filter_by().all()
-        categories = Category().query.filter_by().all()
+        # posts = Post().query.filter_by().all()
+        # categories = Category().query.filter_by().all()
         available_users = User.query.filter_by().all()
         return render_template('admin.html',
-                               posts=posts,
-                               categories=categories,
+                               # posts=posts,
+                               # categories=categories,
                                user=current_user,
                                available_users=available_users)
     else:
@@ -122,6 +122,7 @@ def delete_user(id):
 @auth.route('/send-message/<int:id>', methods=['POST', 'GET'])
 @login_required
 def send_message(id):
+    """ This function allows to send email for user in admin dashboard """
     if request.method == "POST":
         user = User.query.get(id)
         message = request.form.get("message")

@@ -8,6 +8,8 @@ load_dotenv()
 
 
 def send_email(subject, message, to):
+    """ This function allows to send emails
+        It is using a standard python library called "smtplib" """
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             email_body = f"Subject: {subject}\n\n{message}"

@@ -85,11 +85,9 @@ html {
   width: 25px;
   height: 4px;
   margin: 2px;
-  background-color: var(--text-color);
+  background-color: white;
 }
-#navbar-toggle:is(:focus, :hover) .icon-bar {
-  background-color: var(--text-color-focus);
-}
+
 #navbar-toggle[aria-expanded="true"] .icon-bar:is(:first-child, :last-child) {
   position: absolute;
   margin: 0;
