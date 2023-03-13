@@ -22,3 +22,11 @@ class SavedMovies(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     title = db.Column(db.String(200))
     image_url = db.Column(db.String(200))
+
+
+class WatchedMovies(db.Model):
+    """ This model allows to add watched movies in user's profile """
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
+    title = db.Column(db.String(200))
+    image_url = db.Column(db.String(200))

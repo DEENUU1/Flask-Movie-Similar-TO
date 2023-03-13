@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
 
 from similar_movies import db
-from similar_movies.models import SavedMovies
+from similar_movies.models import SavedMovies, WatchedMovies
 from similar_movies.search_movie import Similar, UpComingMovies
 
 views = Blueprint('views', __name__)
@@ -23,17 +23,21 @@ def home():
 @views.route('/similar', methods=['GET'])
 def list_similar_show():
     """ This view allows to display list of similar movies or tv shows """
-    title = request.args.get("title")
-    type = request.args.get("type")
-    similar_shows = Similar(title, type)
     try:
-        return_similar_shows = similar_shows.return_similar_shows()
-    except IndexError:
-        flash("0 similar shows", category='error')
-    return render_template('list_similar.html',
-                           return_similar_shows=return_similar_shows,
-                           title=title,
-                           user=current_user)
+        title = request.args.get("title")
+        type = request.args.get("type")
+        similar_shows = Similar(title, type)
+        try:
+            return_similar_shows = similar_shows.return_similar_shows()
+        except IndexError:
+            flash("No similar shows for this title", category='error')
+        return render_template('list_similar.html',
+                               return_similar_shows=return_similar_shows,
+                               title=title,
+                               user=current_user)
+    except UnboundLocalError:
+        flash("Wrong title, try again", category='error')
+        return redirect(url_for('views.home'))
 
 
 @views.route('/upcoming', methods=['GET'])
@@ -68,4 +72,28 @@ def delete_show(id):
     db.session.delete(show)
     db.session.commit()
     flash("Show deleted from your profile", category='success')
+    return redirect(url_for('auth.profile'))
+
+
+@views.route('/save-watched', methods=['POST'])
+@login_required
+def save_watched_show():
+    """ This function allows to add watched movie or tv show to list for login user """
+    title = request.form.get('title')
+    poster = request.form.get('poster')
+    save_show = WatchedMovies(user_id=current_user.id, title=title, image_url=poster)
+    db.session.add(save_show)
+    db.session.commit()
+    flash("Show saved in your watch history", category='success')
+    return redirect(url_for('auth.profile'))
+
+
+@views.route('/delete-watched/<int:id>', methods=['POST'])
+@login_required
+def delete_watched_show(id):
+    """ This function allows to remove movie or tv show from watched list for login user """
+    show = WatchedMovies.query.get(id)
+    db.session.delete(show)
+    db.session.commit()
+    flash("Show deleted from your watch history", category='success')
     return redirect(url_for('auth.profile'))

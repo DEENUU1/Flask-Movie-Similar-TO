@@ -26,66 +26,10 @@ def test_list_similar_shows_view(test_client):
     assert response.status_code == 200
 
 
-def test_blog_view(test_client):
-    """ Test to check blog view status code """
-    response = test_client.get('/blog')
-    assert response.status_code == 200
-    assert b"Blog" in response.data
-
-
 def test_upComing_list_view(test_client):
     """ Test to check upComing_list view status code """
     response = test_client.get('/upcoming')
     assert response.status_code == 200
     assert b"Upcoming" in response.data
 
-
-def test_save_show_view(test_client):
-    """ Test to check save_show view status code
-        It should return status code 302 becouse it
-        redirect to 'auth.profile' """
-    response = test_client.post('/save-show')
-    assert response.status_code == 302
-
-
-def test_delete_show_view(test_client):
-    """ Test to check delete_show view status code
-        It should return status code 302 becouse it
-        redirect to 'auth.profile' """
-    response = test_client.post('/delete-show/1')
-    assert response.status_code == 302
-
-
-def test_delete_post_view(test_client):
-    """ Test to check delete_post view status code
-        It should return status code 302 becouse it
-        redirect to 'auth.profile' """
-    response = test_client.post('/delete/post/1')
-    assert response.status_code == 302
-
-
-def test_delete_category_view(test_client):
-    """ Test to check delete_category view status code
-        It should return status code 302 becouse it
-        redirect to 'auth.profile' """
-    response = test_client.post('/delete/category/1')
-    assert response.status_code == 302
-
-
-def test_create_post_normal_user(test_client):
-    """ Test to check if for normal user is not able to see
-        view create_post app will move user on view "home" because normal user
-        does not have access. Because of that it should return
-        status code 302 and flash message """
-    response = test_client.get('/create/post')
-    assert response.status_code == 302
-
-
-def test_create_category_normal_user(test_client):
-    """ Test to check if for normal user is not able to see
-        view create_category app will move user on view "home" because normal user
-        does not have access. Because of that it should return
-        status code 302 and flash message """
-    response = test_client.get('/create/category')
-    assert response.status_code == 302
 

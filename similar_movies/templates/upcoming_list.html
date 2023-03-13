@@ -26,22 +26,33 @@
             </h2>
             <p>{{show.overview}}</p>
 
-            <form action="{{ url_for('views.save_show') }}" method="POST">
-                <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
-                <input type="hidden" name="poster" value="{{show.poster}}">
-                <button type="submit" class="btn btn-success">Watch Later</button>
-            </form>
+
+            <div class="d-flex align-items-center">
+                <form action="{{ url_for('views.save_show') }}" method="POST">
+                    <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
+                    <input type="hidden" name="poster" value="{{show.poster}}">
+                    <button type="submit" class="btn btn-success" style="margin-right: 10px;">Watch Later</button>
+                </form>
+
+                <form action="{{ url_for('views.save_watched_show') }}" method="POST">
+                    <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
+                    <input type="hidden" name="poster" value="{{show.poster}}">
+                    <button type="submit" class="btn btn-primary mr-2">Already Watched</button>
+                </form>
+            </div>
 
         </div>
     </div>
 {% endfor %}
 
 
-<div class="pagination">
-    <a href="?page{{current_page - 1 }}" class="btn btn-primary"><<</a>
-    <a href="?page={{current_page + 1}}" class="btn btn-primary">>></a>
-</div>
+<nav style="margin-top: 50px;">
+  <ul class="pagination justify-content-center">
+    <li class="page-item"><a class="page-link" href="?page{{current_page - 1 }}">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{current_page + 1}}">Next</a></li>
+  </ul>
+</nav>
 
-
+<div style="margin-bottom: 100px;"></div>
 
 {% endblock %}

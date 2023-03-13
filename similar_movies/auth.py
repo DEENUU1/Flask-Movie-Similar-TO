@@ -2,9 +2,10 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from similar_movies import db
-from .models import User, SavedMovies
+from similar_movies import db, create_app
+from .models import User, SavedMovies, WatchedMovies
 from similar_movies.mail import send_email
+
 
 auth = Blueprint("auth", __name__)
 
@@ -13,12 +14,10 @@ auth = Blueprint("auth", __name__)
 def login():
     """ This view allows user to login """
     if request.method == 'POST':
-        # Downloading data from form
-        email = request.form.get('email')
-        password = request.form.get('password')
+        email = request.form.get('emailUser')
+        password = request.form.get('passwordUser')
         user = User.query.filter_by(email=email).first()
 
-        # logic of login system
         if user:
             if check_password_hash(user.password, password):
                 login_user(user, remember=True)
@@ -36,10 +35,10 @@ def sign_up():
     """ This view allows user to create a new account """
     if request.method == "POST":
         # Downloading data from form
-        email = request.form.get("email")
-        username = request.form.get("username")
-        password1 = request.form.get("password1")
-        password2 = request.form.get("password2")
+        email = request.form.get("emailUser")
+        username = request.form.get("usernameUser")
+        password1 = request.form.get("passwordUser1")
+        password2 = request.form.get("passwordUser2")
         email_exists = User.query.filter_by(email=email).first()
         username_exists = User.query.filter_by(username=username).first()
         password_hash = generate_password_hash(password1, method='sha256')
@@ -58,9 +57,7 @@ def sign_up():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            send_email("Similar Movies | Sign up",
-                       "Thank you for sign up on the website.",
-                        email)
+            send_email("Similar Movies | Sign up", "Thank you for sign up on the website.", email)
 
             return redirect(url_for('views.home'))
 
@@ -81,7 +78,11 @@ def profile():
     """ This view displays user's profile
         user can display and delete saved movies and tv shows """
     saved_shows = SavedMovies.query.filter_by(user_id=current_user.id).all()
-    return render_template("profile.html", saved_shows=saved_shows, user=current_user)
+    watched_shows = WatchedMovies.query.filter_by(user_id=current_user.id).all()
+    return render_template("profile.html",
+                           saved_shows=saved_shows,
+                           watched_shows=watched_shows,
+                           user=current_user)
 
 
 @auth.route('/admin')
@@ -95,6 +96,7 @@ def admin():
         return render_template('admin.html',
                                user=current_user,
                                available_users=available_users)
+
     else:
         flash("You are not a admin user", category='error')
         return redirect(url_for('views.home'))
@@ -110,6 +112,7 @@ def delete_user(id):
         db.session.commit()
         flash("User deleted", category='success')
         return redirect(url_for('auth.admin'))
+
     else:
         flash("You can't delete this account!", category='error')
         return redirect(url_for('auth.admin'))
@@ -127,6 +130,7 @@ def send_message(id):
                    user.email)
         flash("Message sent", category='success')
         return redirect(url_for('auth.admin'))
+
     else:
         return redirect(url_for('auth.admin'))
 

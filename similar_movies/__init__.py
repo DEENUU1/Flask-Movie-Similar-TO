@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 
 load_dotenv()
 
@@ -11,11 +12,14 @@ db = SQLAlchemy()
 DB_NAME = "database.db"
 
 
+
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
+    csrf = CSRFProtect()
+    csrf.init_app(app)
 
     from .views import views
     app.register_blueprint(views)
