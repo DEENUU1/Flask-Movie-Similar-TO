@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from similar_movies import db, create_app
 from .models import User, SavedMovies, WatchedMovies
-from similar_movies.mail import send_email
+from similar_movies.email import send_email
 
 
 auth = Blueprint("auth", __name__)
