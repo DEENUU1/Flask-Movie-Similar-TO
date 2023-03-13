@@ -31,7 +31,10 @@ class Search:
         data = json_result['results']
 
         if result.status_code == 200:
-            return str(data[0]['id'])
+            try:
+                return str(data[0]['id'])
+            except KeyError:
+                return "abc"
         else:
             raise Exception("Error")
 

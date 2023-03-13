@@ -23,17 +23,21 @@ def home():
 @views.route('/similar', methods=['GET'])
 def list_similar_show():
     """ This view allows to display list of similar movies or tv shows """
-    title = request.args.get("title")
-    type = request.args.get("type")
-    similar_shows = Similar(title, type)
     try:
-        return_similar_shows = similar_shows.return_similar_shows()
-    except IndexError:
-        flash("0 similar shows", category='error')
-    return render_template('list_similar.html',
-                           return_similar_shows=return_similar_shows,
-                           title=title,
-                           user=current_user)
+        title = request.args.get("title")
+        type = request.args.get("type")
+        similar_shows = Similar(title, type)
+        try:
+            return_similar_shows = similar_shows.return_similar_shows()
+        except IndexError:
+            flash("No similar shows for this title", category='error')
+        return render_template('list_similar.html',
+                               return_similar_shows=return_similar_shows,
+                               title=title,
+                               user=current_user)
+    except UnboundLocalError:
+        flash("Wrong title, try again", category='error')
+        return redirect(url_for('views.home'))
 
 
 @views.route('/upcoming', methods=['GET'])
