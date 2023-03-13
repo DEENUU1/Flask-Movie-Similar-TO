@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
 
 from similar_movies import db
-from similar_movies.models import SavedMovies
+from similar_movies.models import SavedMovies, WatchedMovies
 from similar_movies.search_movie import Similar, UpComingMovies
 
 views = Blueprint('views', __name__)
@@ -68,4 +68,28 @@ def delete_show(id):
     db.session.delete(show)
     db.session.commit()
     flash("Show deleted from your profile", category='success')
+    return redirect(url_for('auth.profile'))
+
+
+@views.route('/save-watched', methods=['POST'])
+@login_required
+def save_watched_show():
+    """ This function allows to add watched movie or tv show to list for login user """
+    title = request.form.get('title')
+    poster = request.form.get('poster')
+    save_show = WatchedMovies(user_id=current_user.id, title=title, image_url=poster)
+    db.session.add(save_show)
+    db.session.commit()
+    flash("Show saved in your watch history", category='success')
+    return redirect(url_for('auth.profile'))
+
+
+@views.route('/delete-watched/<int:id>', methods=['POST'])
+@login_required
+def delete_watched_show(id):
+    """ This function allows to remove movie or tv show from watched list for login user """
+    show = WatchedMovies.query.get(id)
+    db.session.delete(show)
+    db.session.commit()
+    flash("Show deleted from your watch history", category='success')
     return redirect(url_for('auth.profile'))
