@@ -1,4 +1,4 @@
-from similar_movies.models import User, SavedMovies
+from similar_movies.models import User, SavedMovies, WatchedMovies
 
 
 def test_user_model():
@@ -29,4 +29,19 @@ def test_saved_movies_model():
     assert movie_1.user_id == 1
 
 
+def test_watched_movies_model():
+    """ Simple model test to test saving watched movie """
+    user_1 = User(id=1,
+                 username='testuser',
+                 email='test@email.com',
+                 password='testpassword')
 
+    movie_1 = WatchedMovies(id=1,
+                            user_id=user_1.id,
+                            title="Test movie",
+                            image_url="adsad21")
+
+    assert movie_1.title == "Test movie"
+    assert movie_1.user_id == user_1.id
+    assert movie_1.id == 1
+    assert movie_1.image_url == "adsad21"

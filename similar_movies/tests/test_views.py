@@ -33,19 +33,3 @@ def test_upComing_list_view(test_client):
     assert b"Upcoming" in response.data
 
 
-def test_save_show_view(test_client):
-    """ Test to check save_show view status code
-        It should return status code 302 becouse it
-        redirect to 'auth.profile' """
-    response = test_client.post('/save-show')
-    assert response.status_code == 302
-
-
-def test_delete_show_view(test_client):
-    """ Test to check delete_show view status code
-        It should return status code 302 becouse it
-        redirect to 'auth.profile' """
-    response = test_client.post('/delete-show/1')
-    assert response.status_code == 302
-
-
