@@ -14,20 +14,24 @@
           <a class="nav-link active" href="/admin">Admin</a>
         </li>
         {% endif %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Account
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            {% if user.is_authenticated %}
-            <li><a class="dropdown-item" href="/profile">Profile</a></li>
-            <li><a class="dropdown-item" href="/logout">Logout</a></li>
-            {% else %}
-            <li><a class="dropdown-item" href="/login">Login</a></li>
-            <li><a class="dropdown-item" href="/signup">Sign up</a></li>
-            {% endif %}
-          </ul>
+
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link active" href="/profile">Profile</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/signup">Sign up</a>
+        </li>
+        {% endif %}
+
+
       </ul>
     </div>
   </div>
