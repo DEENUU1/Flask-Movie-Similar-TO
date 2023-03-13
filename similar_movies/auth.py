@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from similar_movies import db
-from .models import User, SavedMovies
+from .models import User, SavedMovies, WatchedMovies
 from similar_movies.mail import send_email
 
 auth = Blueprint("auth", __name__)
@@ -81,7 +81,8 @@ def profile():
     """ This view displays user's profile
         user can display and delete saved movies and tv shows """
     saved_shows = SavedMovies.query.filter_by(user_id=current_user.id).all()
-    return render_template("profile.html", saved_shows=saved_shows, user=current_user)
+    watched_shows = WatchedMovies.query.filter_by(user_id=current_user.id).all()
+    return render_template("profile.html", saved_shows=saved_shows, watched_shows=watched_shows, user=current_user)
 
 
 @auth.route('/admin')

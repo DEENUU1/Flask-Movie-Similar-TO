@@ -13,26 +13,41 @@
 
 {% block content %}
 
+{% if return_similar_shows %}
 <div class="px-4 py-5 my-5 text-center text-light">
     <h1 class="display-5 fw-bold">Similar to {{title}}</h1>
 </div>
 
-{% for show in return_similar_shows %}
-    <div class="card">
-        <img src="https://image.tmdb.org/t/p/w500/{{show.poster}}"/>
-        <div class="card-info">
-            <h2>{{show.title}}
-            <span>({{show.release_date}})</span>
-            </h2>
-            <p>{{show.overview}}</p>
 
-            <form action="{{ url_for('views.save_show') }}" method="POST">
-                <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
-                <input type="hidden" name="poster" value="{{show.poster}}">
-                <button type="button" class="btn btn-success">Watch Later</button>
-            </form>
+    {% for show in return_similar_shows %}
+        <div class="card">
+            <img src="https://image.tmdb.org/t/p/w500/{{show.poster}}"/>
+            <div class="card-info">
+                <h2>{{show.title}}
+                <span>({{show.release_date}})</span>
+                </h2>
+                <p>{{show.overview}}</p>
 
+                <form action="{{ url_for('views.save_show') }}" method="POST">
+                    <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
+                    <input type="hidden" name="poster" value="{{show.poster}}">
+                    <button type="submit" class="btn btn-success">Watch Later</button>
+                </form>
+
+                <form action="{{ url_for('views.save_watched_show') }}" method="POST">
+                    <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
+                    <input type="hidden" name="poster" value="{{show.poster}}">
+                <button type="submit" class="btn btn-primary">Already watched</button>
+                </form>
+
+            </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+{% else %}
+<div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold">There is no similar movies/tv shows to {{title}}</h1>
+</div>
+{% endif %}
+
+
 {% endblock %}
