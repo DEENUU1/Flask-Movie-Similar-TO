@@ -66,7 +66,7 @@ def test_sign_up_not_the_same_password(client):
 
     assert b"Password are not the same!" in response.data
 
-
+    
 def test_logout(client):
     """ Test logout functionality """
     with client:
