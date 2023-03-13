@@ -14,10 +14,9 @@ def login():
     """ This view allows user to login """
     if request.method == 'POST':
         # Downloading data from form
-        email = request.form.get('email')
-        password = request.form.get('password')
+        email = request.form.get('emailUser')
+        password = request.form.get('passwordUser')
         user = User.query.filter_by(email=email).first()
-
         # logic of login system
         if user:
             if check_password_hash(user.password, password):
@@ -36,10 +35,10 @@ def sign_up():
     """ This view allows user to create a new account """
     if request.method == "POST":
         # Downloading data from form
-        email = request.form.get("email")
-        username = request.form.get("username")
-        password1 = request.form.get("password1")
-        password2 = request.form.get("password2")
+        email = request.form.get("emailUser")
+        username = request.form.get("usernameUser")
+        password1 = request.form.get("passwordUser1")
+        password2 = request.form.get("passwordUser2")
         email_exists = User.query.filter_by(email=email).first()
         username_exists = User.query.filter_by(username=username).first()
         password_hash = generate_password_hash(password1, method='sha256')

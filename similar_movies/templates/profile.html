@@ -18,6 +18,7 @@
     <h1 class="display-5 fw-bold">Watch Later</h1>
 </div>
 
+{% if saved_shows %}
 <div class="row justify-content-center text-light">
     <div class="col-auto">
         <div class="table-responsive">
@@ -48,12 +49,29 @@
         </div>
     </div>
 </div>
+{% else %}
+<div class="row justify-content-center text-light">
+    <div class="col-auto">
+        <div class="table-responsive">
+            <table class="table-sm border border-secondary">
+                <thead>
+                    <tr>
+                        <h1>You don't have any saved movies</h1>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
 
 <div class="px-4 py-5 my-5 text-center text-light">
     <h1 class="display-5 fw-bold">Watch History</h1>
 </div>
 
-
+{% if watched_shows %}
 <div class="row justify-content-center text-light">
     <div class="col-auto">
         <div class="table-responsive">
@@ -84,5 +102,22 @@
         </div>
     </div>
 </div>
+{% else %}
+<div class="row justify-content-center text-light">
+    <div class="col-auto">
+        <div class="table-responsive">
+            <table class="table-sm border border-secondary">
+                <thead>
+                    <tr>
+                        <h1>You don't have any saved movies</h1>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
 <div style="margin-bottom: 100px;"></div>
 {% endblock %}
