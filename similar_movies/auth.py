@@ -86,6 +86,26 @@ def admin():
         return redirect(url_for('views.home'))
 
 
+@auth.route('/admin/users/<int:id>')
+@login_required
+def user_details(id):
+    """ This view allows admin user to check information about every single user """
+    user_id = current_user.id
+    if user_id == 1:
+        user_info = User.query.get(id)
+        user_saved_shows = SavedMovies.query.filter_by(user_id=user_info.id).all()
+        user_watched_shows = WatchedMovies.query.filter_by(user_id=user_info.id).all()
+        return render_template('user_details.html',
+                               user=current_user,
+                               user_info=user_info,
+                               user_saved_shows=user_saved_shows,
+                               user_watched_shows=user_watched_shows)
+
+    else:
+        flash("You are not a admin user", category='error')
+        return redirect(url_for('views.home'))
+
+
 @auth.route('/delete-user/<int:id>', methods=['POST'])
 @login_required
 def delete_user(id):
