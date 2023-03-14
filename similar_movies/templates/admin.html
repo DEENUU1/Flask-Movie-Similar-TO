@@ -14,40 +14,47 @@
     <h1 class="display-5 fw-bold">Admin dashboard</h1>
 </div>
 
-<div class="table-responsive">
-    <table class="table table-dark">
-        <thead>
-        <tr>
-            <td>ID</td>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Delete User</td>
-            <td>Send message</td>
-        </tr>
-        </thead>
-        <tbody>
-        {% for user in available_users %}
-        <tr>
-            <td>{{user.id}}</td>
-            <td>{{user.username}}</td>
-            <td>{{user.email}}</td>
-            <td>
-                <form action="{{ url_for('auth.delete_user', id=user.id) }}" method="POST">
-                    <button class="btn btn-danger" type="submit">Delete user</button>
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                </form>
-            </td>
-            <td>
-                <form action="{{ url_for('auth.send_message', id=user.id) }}" method="POST">
-                    <input type="text" name="message">
-                    <button class="btn btn-success" type="submit">Send message</button>
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
+<div class="row justify-content-center text-light">
+    <div class="col-auto">
+        <div class="table-responsive">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table-sm border border-secondary table-striped mb-0">
+                <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Delete User</td>
+                    <td>Send message</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in available_users %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td><a href="admin/users/{{user.id}}">{{user.username}}</td></a>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <form action="{{ url_for('auth.delete_user', id=user.id) }}" method="POST">
+                            <button class="btn btn-danger" type="submit">Delete user</button>
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('auth.send_message', id=user.id) }}" method="POST">
+                            <input type="text" name="message">
+                            <button class="btn btn-success" type="submit">Send message</button>
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div style="margin-bottom: 50px;"></div>
