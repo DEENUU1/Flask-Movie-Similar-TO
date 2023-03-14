@@ -74,8 +74,8 @@ def profile():
 def admin():
     """ This view display admin dashboard
         admin user is available to delete posts and categories """
-    id = current_user.id
-    if id == 1:
+    user_id = current_user.id
+    if user_id == 1:
         available_users = User.query.filter_by().all()
         return render_template('admin.html',
                                user=current_user,
