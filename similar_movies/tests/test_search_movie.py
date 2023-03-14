@@ -2,8 +2,8 @@ import pytest
 from requests import Response
 from unittest import mock
 from unittest.mock import patch
-from similar_movies.search_movie import Search, ShowData, BaseAPI, UpComingMovies, PopularMovies
-import os
+from similar_movies.search_movie import \
+    (Search, ShowData, BaseAPI, UpComingMovies, PopularMovies, Similar)
 
 
 @pytest.fixture()
@@ -51,6 +51,41 @@ def test_popular_movies_endpoint():
     assert popular_movies.endpoint == 'https://api.themoviedb.org/3/movie/popular'
 
 
+@pytest.fixture()
+def mock_response():
+    response = Response()
+    response.status_code = 200
+    response._content = b'{"results": [{"title": "Movie 1", "overview": "Overview 1", "poster_path": "poster1.jpg", "release_date": "2022-01-01"}]}'
+    return response
+
+
+@pytest.fixture()
+def class_data():
+    return Similar(query="Test movie", type="movie")
+
+
+@patch('similar_movies.search_movie.get')
+def test_similar_search_for_similar(mock_get, class_data, mock_response):
+    mock_get.return_value = mock_response
+    data = class_data.search_for_similar()
+    assert isinstance(data, list)
+    assert isinstance(data[0], dict)
+    assert data[0]['title'] == 'Movie 1'
+
+
+def test_similar_return_similar_shows(class_data):
+    with patch.object(class_data, 'search_for_similar',
+                      return_value=[{'title': 'Movie 1', 'overview': 'Overview 1', 'poster_path': 'poster1.jpg',
+                                     'release_date': '2022-01-01'}]):
+        data = class_data.return_similar_shows()
+    assert isinstance(data, list)
+    assert isinstance(data[0], ShowData)
+    assert data[0].title == "Movie 1"
+    assert data[0].overview == "Overview 1"
+    assert data[0].poster == "poster1.jpg"
+    assert data[0].release_date == '2022'
+
+
 @pytest.fixture
 def movie_search():
     """ Fixture for Search class """
@@ -84,7 +119,6 @@ def test_similar_movie_data_class():
     assert data.overview == "Short overview"
     assert data.release_date == "20.06.2018"
     assert data.poster == "/poster.png"
-
 
 
 
