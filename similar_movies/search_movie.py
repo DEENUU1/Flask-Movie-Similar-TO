@@ -100,60 +100,43 @@ class Similar:
             return all_tv_shows
 
 
-class UpComingMovies:
-    def __init__(self):
+class BaseAPI:
+    """ Base class that allows to make request to API
+        and return data from all API pages """
+    def __init__(self, endpoint: str):
+        self.endpoint = endpoint
         self.api_key = os.getenv("MOVIEDB_API_KEY")
-        self.base_url = "https://api.themoviedb.org/3/movie/now_playing"
 
-    def search_upcoming_movies(self, page: int = 1) -> List[Dict[str, Any]]:
-        """This method searches for upcoming movies available in cinema
-            on a specific page and with a specific number of results per page"""
-        response = get(
-            f"{self.base_url}?api_key={self.api_key}&page={page}")
+    def _get_data(self, page: int = 1) -> List[Dict[str, Any]]:
+        response = get(f"{self.endpoint}?api_key={self.api_key}&page={page}")
         json_result = json.loads(response.content)
         if not json_result.get('results'):
             return []
         return json_result['results']
 
-    def return_upcoming_movies(self, page: int = 1) -> List[ShowData]:
-        """ This method allows returning data from the API about upcoming movies
-            it allows to return all pages from API by using pagination"""
-        all_upcoming = []
-        for upcoming in self.search_upcoming_movies(page=page):
-            upcoming_data = ShowData(
-                title=upcoming['title'],
-                overview=upcoming['overview'],
-                poster=upcoming['poster_path'],
-                release_date=upcoming['release_date']
+    def return_data(self, page: int = 1) -> List[ShowData]:
+        all_data = []
+        for data in self._get_data(page=page):
+            data_object = ShowData(
+                title=data['title'],
+                overview=data['overview'],
+                poster=data['poster_path'],
+                release_date=data['release_date']
             )
-            all_upcoming.append(upcoming_data)
-        return all_upcoming
+            all_data.append(data_object)
+        return all_data
 
 
-class Popular:
+class UpComingMovies(BaseAPI):
+    """ This class inherits from BaseAPI and allows to return all upcoming movies """
     def __init__(self):
-        self.api_key = os.getenv("MOVIEDB_API_KEY")
-        self.base_url = "https://api.themoviedb.org/3/movie/popular?api_key="
+        endpoint = "https://api.themoviedb.org/3/movie/now_playing"
+        super().__init__(endpoint=endpoint)
 
-    def search_popular_shows(self, page: int = 1) -> List[Dict[str, Any]]:
-        """ This method allows to search for the most popular movies """
-        response = get(
-            f"{self.base_url}{self.api_key}&page={page}")
-        json_result = json.loads(response.content)
-        if not json_result.get('results'):
-            return []
-        return json_result['results']
 
-    def return_popular_shows(self, page: int = 1) -> List[ShowData]:
-        """ This method allows to return data from the API about popular movies
-            it allows to return all pages from API by using pagination """
-        all_popular = []
-        for popular in self.search_popular_shows(page=page):
-            popular_data = ShowData(
-                title=popular['title'],
-                overview=popular['overview'],
-                poster=popular['poster_path'],
-                release_date=popular['release_date']
-            )
-            all_popular.append(popular_data)
-        return all_popular
+class PopularMovies(BaseAPI):
+    """ This class inherits from BaseAPI and allows to return all popular movies """
+    def __init__(self):
+        endpoint = "https://api.themoviedb.org/3/movie/popular"
+        super().__init__(endpoint=endpoint)
+
