@@ -28,3 +28,18 @@ def test_logout(client):
         response = client.get('/logout', follow_redirects=True)
 
         assert response.status_code == 200
+
+
+def test_profile(client):
+    """ Test for profile view to check if a status code is equal to 200 """
+    with client:
+        response = client.get('/profile', follow_redirects=True)
+        assert response.status_code == 200
+
+
+def test_admin(client):
+    """ Test for admin view to check if a status code is equal to 200 """
+    with client:
+        response = client.get('/admin', follow_redirects=True)
+        assert response.status_code == 200
+
