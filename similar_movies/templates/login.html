@@ -21,17 +21,15 @@
               <p class="text-white-50 mb-5">Please enter your email and password!</p>
 
               <form method="post">
+                {{ form.hidden_tag() }}
                 <div class="form-outline form-white mb-4">
-                  <input type="email" id="emailUser" name="emailUser" class="form-control form-control-lg" />
-                  <label class="form-label" for="emailUser">Email</label>
-                </div>
+                  {{ form.email(class_="form-control form-control-lg", placeholder="Email") }}
 
+                </div>
                 <div class="form-outline form-white mb-4">
-                  <input type="password" id="passwordUser" name="passwordUser" class="form-control form-control-lg" />
-                  <label class="form-label" for="passwordUser">Password</label>
+                  {{ form.password(class_="form-control form-control-lg", placeholder="Password") }}
                 </div>
-
-                <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                  {{ form.submit(class_="btn btn-outline-light btn-lg px-5") }}
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               </form>
             </div>

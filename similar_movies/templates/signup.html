@@ -20,28 +20,18 @@
               <h2 class="fw-bold mb-2 text-uppercase">Sign Up</h2>
               <p class="text-white-50 mb-5">Please enter your email, username and password!</p>
 
-              <form method="post">
+              <form method="POST" action="">
+                {{ form.hidden_tag() }}
                 <div class="form-outline form-white mb-4">
-                  <input type="email" id="emailUser" name="emailUser" class="form-control form-control-lg" />
-                  <label class="form-label" for="emailUser">Email</label>
+                  {{ form.email(class_="form-control form-control-lg", placeholder="Email") }}
                 </div>
-
                 <div class="form-outline form-white mb-4">
-                  <input type="text" id="usernameUser" name="usernameUser" class="form-control form-control-lg" />
-                  <label class="form-label" for="usernameUser">Username</label>
+                  {{ form.username(class_="form-control form-control-lg", placeholder="Username") }}
                 </div>
-
                 <div class="form-outline form-white mb-4">
-                  <input type="password" id="passwordUser1" name="passwordUser1" class="form-control form-control-lg" />
-                  <label class="form-label" for="passwordUser1">Password</label>
+                  {{ form.password(class_="form-control form-control-lg", placeholder="Password") }}
                 </div>
-
-                <div class="form-outline form-white mb-4">
-                  <input type="password" id="passwordUser2" name="passwordUser2" class="form-control form-control-lg" />
-                  <label class="form-label" for="passwordUser2">Repeat password</label>
-                </div>
-
-                <button class="btn btn-outline-light btn-lg px-5" type="submit">Sign Up</button>
+                  {{ form.submit(class_="btn btn-outline-light btn-lg px-5") }}
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               </form>
 
