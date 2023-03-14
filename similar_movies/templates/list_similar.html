@@ -34,12 +34,14 @@
                         <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
                         <input type="hidden" name="poster" value="{{show.poster}}">
                         <button type="submit" class="btn btn-success" style="margin-right: 10px;">Watch Later</button>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     </form>
 
                     <form action="{{ url_for('views.save_watched_show') }}" method="POST">
                         <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
                         <input type="hidden" name="poster" value="{{show.poster}}">
-                    <button type="submit" class="btn btn-primary mr-2">Already Watched</button>
+                        <button type="submit" class="btn btn-primary mr-2">Already Watched</button>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     </form>
                 </div>
             </div>

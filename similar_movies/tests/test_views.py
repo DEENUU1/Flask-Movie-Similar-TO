@@ -33,3 +33,8 @@ def test_upComing_list_view(test_client):
     assert b"Upcoming" in response.data
 
 
+def test_popular_movie_list_view(test_client):
+    """ Test to check popular_movies view status code """
+    response = test_client.get('/popular/movies')
+    assert response.status_code == 200
+

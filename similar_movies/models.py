@@ -1,5 +1,4 @@
 from flask_login import UserMixin
-from sqlalchemy import func
 
 from . import db
 
@@ -10,7 +9,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(30), unique=True)
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(150))
-    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
 
     def __str__(self):
         return self.username

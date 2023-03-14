@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+
+{% block title %}Find similar film{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="/static/css/admin.css" />
+{% endblock %}
+
+
+{% block content %}
+
+<div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold">Information about {{user_info.username}} </h1>
+</div>
+
+<div class="row justify-content-center text-light">
+    <div class="col-auto">
+        <div class="table-responsive">
+            <table class="table-sm border border-secondary">
+                <thead>
+                <tr>
+                    <td><h3>Saved Movies</h3></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% if user_saved_shows %}
+                    {% for user_shows in user_saved_shows %}
+                    <tr>
+                        <td>{{user_shows.title}}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                <tr>
+                    <td>This user doesn't have any saved movies</td>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 50px;"></div>
+
+<div class="row justify-content-center text-light">
+    <div class="col-auto">
+        <div class="table-responsive">
+            <table class="table-sm border border-secondary">
+                <thead>
+                <tr>
+                    <td><h3>Watched Movies</h3></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% if user_watched_shows %}
+                    {% for user_shows in user_watched_shows %}
+                    <tr>
+                        <td>{{user_shows.title}}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                <tr>
+                    <td>This user doesn't have any watched movies</td>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+          </div>
+    </div>
+</div>
+
+
+
+
+
+<div style="margin-bottom: 50px;"></div>
+{% endblock %}

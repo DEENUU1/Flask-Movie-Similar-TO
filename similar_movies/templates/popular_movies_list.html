@@ -14,10 +14,10 @@
 {% block content %}
 
 <div class="px-4 py-5 my-5 text-center text-light">
-    <h1 class="display-5 fw-bold">Upcoming movies</h1>
+    <h1 class="display-5 fw-bold">Popular movies</h1>
 </div>
 
-{% for show in movies %}
+{% for show in popular_movie_list %}
     <div class="card">
         <img src="https://image.tmdb.org/t/p/w500/{{show.poster}}"/>
         <div class="card-info">

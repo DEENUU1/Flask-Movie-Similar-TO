@@ -9,6 +9,14 @@ from requests import get
 load_dotenv()
 
 
+@dataclass()
+class ShowData:
+    title: str
+    overview: str
+    release_date: str
+    poster: str
+
+
 class Search:
     """ This class allows to get movie ID """
 
@@ -39,14 +47,6 @@ class Search:
             raise Exception("Error")
 
 
-@dataclass()
-class SimilarData:
-    title: str
-    overview: str
-    release_date: str
-    poster: str
-
-
 class Similar:
     def __init__(self, query: str, type: str):
         self.search = Search(query, type)
@@ -70,7 +70,7 @@ class Similar:
                 break
         return all_results
 
-    def return_similar_shows(self) -> list[SimilarData]:
+    def return_similar_shows(self) -> list[ShowData]:
         """ This method returns
             title, date release, overview, photo
             for all similar movies and tv shows """
@@ -78,7 +78,7 @@ class Similar:
         if self.type == "movie":
             all_movies = []
             for movie in self.search_for_similar():
-                shows_data = SimilarData(
+                shows_data = ShowData(
                     title=movie['title'],
                     release_date=movie['release_date'][:4],
                     overview=movie['overview'],
@@ -90,7 +90,7 @@ class Similar:
         elif self.type == 'tv':
             all_tv_shows = []
             for show in self.search_for_similar():
-                show_data = SimilarData(
+                show_data = ShowData(
                     title=show['name'],
                     release_date=show['first_air_date'][:4],
                     overview=show['overview'],
@@ -100,39 +100,43 @@ class Similar:
             return all_tv_shows
 
 
-@dataclass()
-class UpComingData:
-    title: str
-    poster: str
-    overview: str
-    release_date: str
-
-
-class UpComingMovies:
-    def __init__(self):
+class BaseAPI:
+    """ Base class that allows to make request to API
+        and return data from all API pages """
+    def __init__(self, endpoint: str):
+        self.endpoint = endpoint
         self.api_key = os.getenv("MOVIEDB_API_KEY")
-        self.base_url = "https://api.themoviedb.org/3/movie/now_playing"
 
-    def search_upcoming_movies(self, page: int = 1) -> List[Dict[str, Any]]:
-        """This method searches for upcoming movies available in cinema
-        on a specific page and with a specific number of results per page"""
-        response = get(
-            f"{self.base_url}?api_key={self.api_key}&page={page}")
+    def _get_data(self, page: int = 1) -> List[Dict[str, Any]]:
+        response = get(f"{self.endpoint}?api_key={self.api_key}&page={page}")
         json_result = json.loads(response.content)
         if not json_result.get('results'):
             return []
         return json_result['results']
 
-    def return_upcoming_movies(self, page: int = 1) -> List[UpComingData]:
-        """ This method allows returning data from the API about upcoming movies
-         on a specific page and with a specific number of results per page"""
-        all_upcoming = []
-        for upcoming in self.search_upcoming_movies(page=page):
-            upcoming_data = UpComingData(
-                title=upcoming['title'],
-                overview=upcoming['overview'],
-                poster=upcoming['poster_path'],
-                release_date=upcoming['release_date']
+    def return_data(self, page: int = 1) -> List[ShowData]:
+        all_data = []
+        for data in self._get_data(page=page):
+            data_object = ShowData(
+                title=data['title'],
+                overview=data['overview'],
+                poster=data['poster_path'],
+                release_date=data['release_date']
             )
-            all_upcoming.append(upcoming_data)
-        return all_upcoming
+            all_data.append(data_object)
+        return all_data
+
+
+class UpComingMovies(BaseAPI):
+    """ This class inherits from BaseAPI and allows to return all upcoming movies """
+    def __init__(self):
+        endpoint = "https://api.themoviedb.org/3/movie/now_playing"
+        super().__init__(endpoint=endpoint)
+
+
+class PopularMovies(BaseAPI):
+    """ This class inherits from BaseAPI and allows to return all popular movies """
+    def __init__(self):
+        endpoint = "https://api.themoviedb.org/3/movie/popular"
+        super().__init__(endpoint=endpoint)
+

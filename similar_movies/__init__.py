@@ -5,12 +5,12 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from flask_migrate import Migrate
 
 load_dotenv()
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
-
 
 
 def create_app():
@@ -20,6 +20,8 @@ def create_app():
     db.init_app(app)
     csrf = CSRFProtect()
     csrf.init_app(app)
+    migrate = Migrate()
+    migrate.init_app(app, db)
 
     from .views import views
     app.register_blueprint(views)
