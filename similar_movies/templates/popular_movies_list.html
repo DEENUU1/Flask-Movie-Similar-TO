@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %} Similar movies to {{movie_name}} {% endblock %}
+
+{% block script %}
+    <script src="/static/js/card_animation.js" defer></script>
+{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="/static/css/cards.css" />
+{% endblock %}
+
+{% block content %}
+
+<div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold">Popular movies</h1>
+</div>
+
+{% for show in popular_movie_list %}
+    <div class="card">
+        <img src="https://image.tmdb.org/t/p/w500/{{show.poster}}"/>
+        <div class="card-info">
+            <h2>{{show.title}}
+            <span>({{show.release_date}})</span>
+            </h2>
+            <p>{{show.overview}}</p>
+
+
+            <div class="d-flex align-items-center">
+                <form action="{{ url_for('views.save_show') }}" method="POST">
+                    <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
+                    <input type="hidden" name="poster" value="{{show.poster}}">
+                    <button type="submit" class="btn btn-success" style="margin-right: 10px;">Watch Later</button>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                </form>
+
+                <form action="{{ url_for('views.save_watched_show') }}" method="POST">
+                    <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
+                    <input type="hidden" name="poster" value="{{show.poster}}">
+                    <button type="submit" class="btn btn-primary mr-2">Already Watched</button>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                </form>
+            </div>
+
+        </div>
+    </div>
+{% endfor %}
+
+
+<nav style="margin-top: 50px;">
+  <ul class="pagination justify-content-center">
+    <li class="page-item"><a class="page-link" href="?page{{current_page - 1 }}">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{current_page + 1}}">Next</a></li>
+  </ul>
+</nav>
+
+<div style="margin-bottom: 100px;"></div>
+
+{% endblock %}

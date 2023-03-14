@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 
 from similar_movies import db
 from similar_movies.models import SavedMovies, WatchedMovies
-from similar_movies.search_movie import Similar, UpComingMovies
+from similar_movies.search_movie import Similar, UpComingMovies, PopularMovies
 
 views = Blueprint('views', __name__)
 
@@ -42,11 +42,23 @@ def list_similar_show():
 
 @views.route('/upcoming', methods=['GET'])
 def upComing_list():
-    """ This view is displaying upcoming movies. It has a pagination when 1 page is 1 page from API """
+    """ This view is displaying upcoming movies. It has a pagination where 1 page is 1 page from API """
     page = request.args.get('page', 1, type=int)
-    upcoming_movies = UpComingMovies().return_upcoming_movies(page=page)
+    upcoming_movies = UpComingMovies().return_data(page=page)
     return render_template("upcoming_list.html",
                            movies=upcoming_movies,
+                           user=current_user,
+                           current_page=page)
+
+
+@views.route('/popular/movies', methods=['GET'])
+def popular_movies():
+    """ This view is displaying popular movies.
+        It has a pagination where 1 page is 1 page from API """
+    page = request.args.get('page', 1, type=int)
+    popular_movie_list = PopularMovies().return_data(page=page)
+    return render_template("popular_movies_list.html",
+                           popular_movie_list=popular_movie_list,
                            user=current_user,
                            current_page=page)
 
