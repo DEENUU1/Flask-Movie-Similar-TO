@@ -21,7 +21,6 @@
             <td>ID</td>
             <td>Name</td>
             <td>Email</td>
-            <td>Date created</td>
             <td>Delete User</td>
             <td>Send message</td>
         </tr>
@@ -32,7 +31,6 @@
             <td>{{user.id}}</td>
             <td>{{user.username}}</td>
             <td>{{user.email}}</td>
-            <td>{{user.date_created}}</td>
             <td>
                 <form action="{{ url_for('auth.delete_user', id=user.id) }}" method="POST">
                     <button class="btn btn-danger" type="submit">Delete user</button>
