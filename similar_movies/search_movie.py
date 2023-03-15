@@ -12,6 +12,7 @@ load_dotenv()
 
 @dataclass()
 class ShowData:
+    """ This dataclass allows to represent data from the API """
     title: str
     overview: str
     release_date: str
@@ -44,12 +45,13 @@ class Search:
             try:
                 return str(data[0]['id'])
             except KeyError:
-                return "abc"
+                return "None"
         else:
-            raise Exception("Error")
+            raise Exception(f"Status code {result.status_code}")
 
 
 class Similar:
+    """ This class allows to return similar movies and tv shows from the API """
     def __init__(self, query: str, type: str):
         self.search = Search(query, type)
         self.type = type
@@ -112,6 +114,7 @@ class BaseAPI:
         self.api_key = os.getenv("MOVIEDB_API_KEY")
 
     def _get_data(self, page: int = 1) -> List[Dict[str, Any]]:
+        """ This method allows to make request to the API """
         response = get(f"{self.endpoint}?api_key={self.api_key}&page={page}")
         json_result = json.loads(response.content)
         if not json_result.get('results'):
@@ -119,6 +122,7 @@ class BaseAPI:
         return json_result['results']
 
     def return_data(self, page: int = 1) -> List[ShowData]:
+        """ This method allows to return data from the API and display them in the flask view """
         all_data = []
         for data in self._get_data(page=page):
             data_object = ShowData(
