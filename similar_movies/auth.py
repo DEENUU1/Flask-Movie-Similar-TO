@@ -6,9 +6,7 @@ from .models import User, SavedMovies, WatchedMovies
 from similar_movies.email import send_email
 from .forms import RegisterForm, LoginForm, ProfileDetailsForm
 from flask_bcrypt import Bcrypt
-from werkzeug.utils import secure_filename
-import os
-from similar_movies import create_app
+
 
 auth = Blueprint("auth", __name__)
 
@@ -23,7 +21,7 @@ def login():
         if user:
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
-                flash("You are login", category='success')
+                flash("You are logged in", category='success')
                 return redirect(url_for('views.home'))
 
     return render_template('login.html', form=form, user=current_user)
@@ -55,7 +53,7 @@ def sign_up():
 def logout():
     """ This function allows user to logout """
     logout_user()
-    flash("You logout", category='success')
+    flash("You have been logged out", category='success')
     return redirect(url_for('views.home'))
 
 

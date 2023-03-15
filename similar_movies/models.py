@@ -12,6 +12,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     bio = db.Column(db.Text)
     country = db.Column(db.String(30))
+    saved_movies = db.relationship('SavedMovies', backref='user', cascade='all, delete-orphan')
+    watched_movies = db.relationship('WatchedMovies', backref='user', cascade='all, delete-orphan')
 
 
 class SavedMovies(db.Model):
