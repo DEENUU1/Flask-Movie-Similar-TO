@@ -111,7 +111,6 @@ class BaseAPI:
         self.endpoint = endpoint
         self.api_key = os.getenv("MOVIEDB_API_KEY")
 
-    @lru_cache(maxsize=128)
     def _get_data(self, page: int = 1) -> List[Dict[str, Any]]:
         response = get(f"{self.endpoint}?api_key={self.api_key}&page={page}")
         json_result = json.loads(response.content)
@@ -119,7 +118,6 @@ class BaseAPI:
             return []
         return json_result['results']
 
-    @lru_cache(maxsize=128)
     def return_data(self, page: int = 1) -> List[ShowData]:
         all_data = []
         for data in self._get_data(page=page):

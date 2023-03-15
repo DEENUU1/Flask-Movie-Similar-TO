@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from similar_movies import db
 from similar_movies.models import SavedMovies, WatchedMovies
 from similar_movies.search_movie import Similar, UpComingMovies, PopularMovies
-import time
+
 
 views = Blueprint('views', __name__)
 
@@ -29,10 +29,7 @@ def list_similar_show():
         type = request.args.get("type")
         similar_shows = Similar(title, type)
         try:
-            start = time.time()
             return_similar_shows = similar_shows.return_similar_shows()
-            end = time.time()
-            print(f"TOTAL TIME IS EQUAL TO {end-start}")
         except IndexError:
             flash("No similar shows for this title", category='error')
         return render_template('list_similar.html',
