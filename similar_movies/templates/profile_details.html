@@ -4,7 +4,11 @@
 {% block title %}Find similar film{% endblock %}
 
 {% block style %}
-  <link rel="stylesheet" type="text/css" href="/static/css/login.css" />
+<style>
+    body {
+        background-color: #100c08;
+     }
+</style>
 {% endblock %}
 
 
@@ -17,26 +21,21 @@
         <div class="card bg-dark text-white" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
             <div class="mb-md-5 mt-md-4 pb-5">
-              <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-              <p class="text-white-50 mb-5">Please enter your email and password!</p>
+              <h2 class="fw-bold mb-2 text-uppercase">Profile details</h2>
+              <p class="text-white-50 mb-5">Tell us more about your self</p>
 
               <form method="post">
                 {{ form.hidden_tag() }}
                 <div class="form-outline form-white mb-4">
-                  {{ form.email(class_="form-control form-control-lg", placeholder="Email") }}
+                  {{ form.bio(class_="form-control form-control-lg", placeholder="Tell something about your self") }}
 
                 </div>
                 <div class="form-outline form-white mb-4">
-                  {{ form.password(class_="form-control form-control-lg", placeholder="Password") }}
+                  {{ form.country(class_="form-control form-control-lg", placeholder="Country") }}
                 </div>
                   {{ form.submit(class_="btn btn-outline-light btn-lg px-5") }}
               </form>
             </div>
-
-            <div>
-              <p class="mb-0">Don't have an account? <a href="/signup" class="text-white-50 fw-bold">Sign Up</a></p>
-            </div>
-
           </div>
         </div>
       </div>

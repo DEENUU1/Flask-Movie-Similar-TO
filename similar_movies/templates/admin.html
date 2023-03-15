@@ -36,13 +36,13 @@
                     <td><a href="admin/users/{{user.id}}">{{user.username}}</td></a>
                     <td>{{user.email}}</td>
                     <td>
-                        <form action="{{ url_for('auth.delete_user', id=user.id) }}" method="POST">
+                        <form action="{{ url_for('auth.delete_user', user_id=user.id) }}" method="POST">
                             <button class="btn btn-danger" type="submit">Delete user</button>
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         </form>
                     </td>
                     <td>
-                        <form action="{{ url_for('auth.send_message', id=user.id) }}" method="POST">
+                        <form action="{{ url_for('auth.send_message', user_id=user.id) }}" method="POST">
                             <input type="text" name="message">
                             <button class="btn btn-success" type="submit">Send message</button>
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -56,6 +56,4 @@
         </div>
     </div>
 </div>
-
-<div style="margin-bottom: 50px;"></div>
 {% endblock %}

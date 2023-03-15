@@ -7,7 +7,7 @@ from flask import flash
 load_dotenv()
 
 
-def send_email(subject, message, to):
+def send_email(subject: str, message: str, to: str):
     """ This function allows to send emails
         It is using a standard python library called "smtplib" """
     try:

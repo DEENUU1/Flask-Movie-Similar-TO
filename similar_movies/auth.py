@@ -4,8 +4,9 @@ from flask_login import login_user, logout_user, login_required, current_user
 from similar_movies import db
 from .models import User, SavedMovies, WatchedMovies
 from similar_movies.email import send_email
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, ProfileDetailsForm
 from flask_bcrypt import Bcrypt
+
 
 auth = Blueprint("auth", __name__)
 
@@ -20,7 +21,7 @@ def login():
         if user:
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
-                flash("You are login", category='success')
+                flash("You are logged in", category='success')
                 return redirect(url_for('views.home'))
 
     return render_template('login.html', form=form, user=current_user)
@@ -52,7 +53,7 @@ def sign_up():
 def logout():
     """ This function allows user to logout """
     logout_user()
-    flash("You logout", category='success')
+    flash("You have been logged out", category='success')
     return redirect(url_for('views.home'))
 
 
@@ -66,6 +67,29 @@ def profile():
     return render_template("profile.html",
                            saved_shows=saved_shows,
                            watched_shows=watched_shows,
+                           user=current_user)
+
+
+@auth.route('/profile/details', methods=['POST', 'GET'])
+@login_required
+def profile_details():
+    """ This view allows login user to edit additional information """
+    form = ProfileDetailsForm()
+    if form.validate_on_submit():
+        user_data = User.query.get(current_user.id)
+
+        # This if statements allows to update only 1 element without deleting others
+        if form.bio.data:
+            user_data.bio = form.bio.data
+        if form.country.data:
+            user_data.country = form.country.data
+
+        db.session.commit()
+        flash("Information saved", category='success')
+        return redirect(url_for('auth.profile'))
+
+    return render_template('profile_details.html',
+                           form=form,
                            user=current_user)
 
 
@@ -86,13 +110,13 @@ def admin():
         return redirect(url_for('views.home'))
 
 
-@auth.route('/admin/users/<int:id>')
+@auth.route('/admin/users/<int:user_id>')
 @login_required
-def user_details(id):
+def user_details(user_id: int):
     """ This view allows admin user to check information about every single user """
-    user_id = current_user.id
-    if user_id == 1:
-        user_info = User.query.get(id)
+    admin_id = current_user.id
+    if admin_id == 1:
+        user_info = User.query.get(user_id)
         user_saved_shows = SavedMovies.query.filter_by(user_id=user_info.id).all()
         user_watched_shows = WatchedMovies.query.filter_by(user_id=user_info.id).all()
         return render_template('user_details.html',
@@ -106,11 +130,11 @@ def user_details(id):
         return redirect(url_for('views.home'))
 
 
-@auth.route('/delete-user/<int:id>', methods=['POST'])
+@auth.route('/delete-user/<int:user_id>', methods=['POST'])
 @login_required
-def delete_user(id):
+def delete_user(user_id: int):
     """ This function allows to remove movie or tv show from list for login user """
-    user = User.query.get(id)
+    user = User.query.get(user_id)
     if user.id != 1:
         db.session.delete(user)
         db.session.commit()
@@ -122,12 +146,12 @@ def delete_user(id):
         return redirect(url_for('auth.admin'))
 
 
-@auth.route('/send-message/<int:id>', methods=['POST', 'GET'])
+@auth.route('/send-message/<int:user_id>', methods=['POST', 'GET'])
 @login_required
-def send_message(id):
+def send_message(user_id: int):
     """ This function allows to send email for user in admin dashboard """
     if request.method == "POST":
-        user = User.query.get(id)
+        user = User.query.get(user_id)
         message = request.form.get("message")
         send_email("Static subject",
                    message,
@@ -137,4 +161,3 @@ def send_message(id):
 
     else:
         return redirect(url_for('auth.admin'))
-
