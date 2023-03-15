@@ -4,14 +4,15 @@ from . import db
 
 
 class User(db.Model, UserMixin):
-    """ This model allows to create user with id as a primary key, email, username and password """
+    """ This model allows to create user with
+    id as a primary key, email, username, password, profile image, bio """
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(30), unique=True)
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(150))
-
-    def __str__(self):
-        return self.username
+    image = db.Column(db.LargeBinary)
+    bio = db.Column(db.Text)
+    country = db.Column(db.String(30))
 
 
 class SavedMovies(db.Model):

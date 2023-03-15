@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+
+{% block title %}Find similar film{% endblock %}
+
+{% block style %}
+<style>
+    body {
+        background-color: #100c08;
+     }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold">Edit your profile picture</h1>
+</div>
+
+<div class="container">
+<form method="post" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+
+  <div class="form-outline form-white mb-4">
+    {{ form.image(class_="form-control form-control-lg", placeholder="Choose your profile picture") }}
+  </div>
+
+    {{ form.submit(class_="btn btn-outline-light btn-lg px-5") }}
+</form>
+</div>
+
+<div style="margin-bottom: 100px;"></div>
+{% endblock %}

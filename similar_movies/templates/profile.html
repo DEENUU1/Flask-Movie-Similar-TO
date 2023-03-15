@@ -14,9 +14,18 @@
 
 {% block content %}
 
-<div class="px-4 py-5 my-5 text-center text-light">
-    <h1 class="display-5 fw-bold">Watch Later</h1>
+
+<div class="px-4 py-2 my-3 text-center text-light">
+    <p class="display-10 fw-bold">Bio: {{user.bio}}</p>
+    <p class="display-10 fw-bold">Country: {{user.country}}</p>
+    <a href="profile/details">Edit your profile</a>
+    <a href="profile/details">Edit your profile picture</a>
 </div>
+
+<div class="px-4 py-2 my-3 text-center text-light">
+    <h1 class="display-6 fw-bold">Watch Later</h1>
+</div>
+
 
 {% if saved_shows %}
 <div class="row justify-content-center text-light">
@@ -68,8 +77,8 @@
 
 
 
-<div class="px-4 py-5 my-5 text-center text-light">
-    <h1 class="display-5 fw-bold">Watch History</h1>
+<div class="px-4 py-2 my-3 text-center text-light">
+    <h1 class="display-6 fw-bold">Watch History</h1>
 </div>
 
 {% if watched_shows %}
