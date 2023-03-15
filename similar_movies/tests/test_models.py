@@ -12,6 +12,18 @@ def test_user_model():
     assert user_1.email == 'test@email.com'
 
 
+def test_new_user_model():
+    """ NEW User model test to test creating a new user """
+    user_1 = User(email='test@email.com',
+                  username='testuser',
+                  password='test_password',
+                  bio="This is a test bio text",
+                  country="USA")
+
+    assert user_1.bio == "This is a test bio text"
+    assert user_1.country == "USA"
+
+
 def test_saved_movies_model():
     """ Simple model test to test saving a movie """
     user_1 = User(id=1,

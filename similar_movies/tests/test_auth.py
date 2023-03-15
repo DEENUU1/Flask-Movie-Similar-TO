@@ -49,3 +49,10 @@ def test_user_details(client):
     with client:
         response = client.get('/admin/users/1', follow_redirects=True)
         assert response.status_code == 200
+
+
+def test_user_profile_details(client):
+    """ Test for profile_details view to check if a status code is equal to 200 """
+    with client:
+        response = client.get('/profile/details', follow_redirects=True)
+        assert response.status_code == 200
