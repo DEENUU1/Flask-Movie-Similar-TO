@@ -30,7 +30,7 @@ def test_base_api_get_data(mock_get, endpoint, mock_response):
     assert data[0]['title'] == 'Movie 1'
 
 
-def test_base_api_return_data(endpoint):
+def test_base_api_return_data(endpoint) -> None:
     with patch.object(endpoint, '_get_data',
                       return_value=[{'title': 'Movie 1', 'overview': 'Overview 1', 'poster_path': 'poster1.jpg', 'release_date': '2022-01-01'}]):
         data = endpoint.return_data()
@@ -41,12 +41,12 @@ def test_base_api_return_data(endpoint):
     assert data[0].release_date == '2022-01-01'
 
 
-def test_upcoming_movies_endpoint():
+def test_upcoming_movies_endpoint() -> None:
     upcoming_movies = UpComingMovies()
     assert upcoming_movies.endpoint == 'https://api.themoviedb.org/3/movie/now_playing'
 
 
-def test_popular_movies_endpoint():
+def test_popular_movies_endpoint() -> None:
     popular_movies = PopularMovies()
     assert popular_movies.endpoint == 'https://api.themoviedb.org/3/movie/popular'
 
@@ -65,7 +65,7 @@ def class_data():
 
 
 @patch('similar_movies.search_movie.get')
-def test_similar_search_for_similar(mock_get, class_data, mock_response):
+def test_similar_search_for_similar(mock_get, class_data, mock_response) -> None:
     mock_get.return_value = mock_response
     data = class_data.search_for_similar()
     assert isinstance(data, list)
@@ -73,7 +73,7 @@ def test_similar_search_for_similar(mock_get, class_data, mock_response):
     assert data[0]['title'] == 'Movie 1'
 
 
-def test_similar_return_similar_shows(class_data):
+def test_similar_return_similar_shows(class_data) -> None:
     with patch.object(class_data, 'search_for_similar',
                       return_value=[{'title': 'Movie 1', 'overview': 'Overview 1', 'poster_path': 'poster1.jpg',
                                      'release_date': '2022-01-01'}]):
@@ -92,24 +92,24 @@ def movie_search():
     return Search("Ant man and the wasp", "movie")
 
 
-def test_create_query(movie_search):
+def test_create_query(movie_search) -> None:
     """ Test for return query function """
     assert movie_search.create_query() == "ant-man-and-the-wasp"
 
 
-def mocked_requests_get(*args):
+def mocked_requests_get(*args) -> None:
     if args[0] == f"https://api.themoviedb.org/3/search/movie?api_key=fakeapikey&query=the-transporter":
         return Response().json(status_code=200)
 
 
 @mock.patch("requests.get", side_effect=mocked_requests_get)
-def test_return_movie_id(mock_get, movie_search):
+def test_return_movie_id(mock_get, movie_search) -> None:
     """ Test for return movie id function in Search class """
     movie_search.query = "The Transporter"
     assert movie_search.return_id == "4108"
 
 
-def test_similar_movie_data_class():
+def test_similar_movie_data_class() -> None:
     """ Test for ShowData dataclass """
     data = ShowData(title="Ant man",
                     overview="Short overview",

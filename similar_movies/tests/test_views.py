@@ -10,7 +10,7 @@ def test_client():
             yield testing_client
 
 
-def test_home_view(test_client):
+def test_home_view(test_client) -> None:
     """ Test for the main view status code
         pass if status code is equal to 200 """
 
@@ -18,7 +18,7 @@ def test_home_view(test_client):
     assert response.status_code == 200
 
 
-def test_list_similar_shows_view(test_client):
+def test_list_similar_shows_view(test_client) -> None:
     """ Test for view with similar movie list
         pass if status code is equal to 200"""
     response = test_client.get('/similar', query_string={'title': 'The Matrix',
@@ -26,14 +26,14 @@ def test_list_similar_shows_view(test_client):
     assert response.status_code == 200
 
 
-def test_upComing_list_view(test_client):
+def test_upComing_list_view(test_client) -> None:
     """ Test to check upComing_list view status code """
     response = test_client.get('/upcoming')
     assert response.status_code == 200
     assert b"Upcoming" in response.data
 
 
-def test_popular_movie_list_view(test_client):
+def test_popular_movie_list_view(test_client) -> None:
     """ Test to check popular_movies view status code """
     response = test_client.get('/popular/movies')
     assert response.status_code == 200

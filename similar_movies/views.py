@@ -5,6 +5,7 @@ from similar_movies import db
 from similar_movies.models import SavedMovies, WatchedMovies
 from similar_movies.search_movie import Similar, UpComingMovies, PopularMovies
 
+
 views = Blueprint('views', __name__)
 
 
@@ -13,8 +14,8 @@ def home():
     """ This is a main view which display form to search a movie or tv shows"""
     if request.method == 'POST':
         title = request.form['title']
-        type = request.form['type']
-        return redirect(url_for('views.list_similar_show', title=title, type=type))
+        show_type = request.form['type']
+        return redirect(url_for('views.list_similar_show', title=title, type=show_type))
     else:
         return render_template('home.html',
                                user=current_user)
@@ -25,8 +26,8 @@ def list_similar_show():
     """ This view allows to display list of similar movies or tv shows """
     try:
         title = request.args.get("title")
-        type = request.args.get("type")
-        similar_shows = Similar(title, type)
+        show_type = request.args.get("type")
+        similar_shows = Similar(title, show_type)
         try:
             return_similar_shows = similar_shows.return_similar_shows()
         except IndexError:
@@ -69,18 +70,21 @@ def save_show():
     """ This function allows to add movie or tv show to list for login user """
     title = request.form.get('title')
     poster = request.form.get('poster')
-    save_show = SavedMovies(user_id=current_user.id, title=title, image_url=poster)
-    db.session.add(save_show)
+    save_shows = SavedMovies(user_id=current_user.id, title=title, image_url=poster)
+    db.session.add(save_shows)
     db.session.commit()
     flash("Show saved in your profile", category='success')
     return redirect(url_for('auth.profile'))
 
 
-@views.route('/delete-show/<int:id>', methods=['POST'])
+@views.route('/delete-show/<int:show_id>', methods=['POST'])
 @login_required
-def delete_show(id):
+def delete_show(show_id):
     """ This function allows to remove movie or tv show from list for login user """
-    show = SavedMovies.query.get(id)
+    show = SavedMovies.query.get(show_id)
+    if show.user_id != current_user.id:
+        flash("You are not allowed to delete this show", category='error')
+        return redirect(url_for('auth.profile'))
     db.session.delete(show)
     db.session.commit()
     flash("Show deleted from your profile", category='success')
@@ -93,18 +97,21 @@ def save_watched_show():
     """ This function allows to add watched movie or tv show to list for login user """
     title = request.form.get('title')
     poster = request.form.get('poster')
-    save_show = WatchedMovies(user_id=current_user.id, title=title, image_url=poster)
-    db.session.add(save_show)
+    save_watched = WatchedMovies(user_id=current_user.id, title=title, image_url=poster)
+    db.session.add(save_watched)
     db.session.commit()
     flash("Show saved in your watch history", category='success')
     return redirect(url_for('auth.profile'))
 
 
-@views.route('/delete-watched/<int:id>', methods=['POST'])
+@views.route('/delete-watched/<int:show_id>', methods=['POST'])
 @login_required
-def delete_watched_show(id):
+def delete_watched_show(show_id):
     """ This function allows to remove movie or tv show from watched list for login user """
-    show = WatchedMovies.query.get(id)
+    show = WatchedMovies.query.get(show_id)
+    if show.user_id != current_user.id:
+        flash("You are not allowed to delete this show", category='error')
+        return redirect(url_for('auth.profile'))
     db.session.delete(show)
     db.session.commit()
     flash("Show deleted from your watch history", category='success')
