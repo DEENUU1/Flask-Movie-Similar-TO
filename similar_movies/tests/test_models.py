@@ -1,7 +1,7 @@
 from similar_movies.models import User, SavedMovies, WatchedMovies
 
 
-def test_user_model():
+def test_user_model() -> None:
     """ Simple model test to test creating a new user """
     user_1 = User(email='test@email.com',
                   username='testuser',
@@ -12,7 +12,7 @@ def test_user_model():
     assert user_1.email == 'test@email.com'
 
 
-def test_new_user_model():
+def test_new_user_model() -> None:
     """ NEW User model test to test creating a new user """
     user_1 = User(email='test@email.com',
                   username='testuser',
@@ -24,7 +24,7 @@ def test_new_user_model():
     assert user_1.country == "USA"
 
 
-def test_saved_movies_model():
+def test_saved_movies_model() -> None:
     """ Simple model test to test saving a movie """
     user_1 = User(id=1,
                   username='testuser',
@@ -41,7 +41,7 @@ def test_saved_movies_model():
     assert movie_1.user_id == 1
 
 
-def test_watched_movies_model():
+def test_watched_movies_model() -> None:
     """ Simple model test to test saving watched movie """
     user_1 = User(id=1,
                  username='testuser',

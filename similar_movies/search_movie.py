@@ -22,10 +22,10 @@ class ShowData:
 class Search:
     """ This class allows to get movie ID """
 
-    def __init__(self, query: str, type: str):
+    def __init__(self, query: str, show_type: str):
         self.api_key = os.getenv('MOVIEDB_API_KEY')
         self.query = query
-        self.type = type
+        self.type = show_type
 
     def create_query(self) -> str:
         """ This method format the user input into query """
@@ -52,9 +52,9 @@ class Search:
 
 class Similar:
     """ This class allows to return similar movies and tv shows from the API """
-    def __init__(self, query: str, type: str):
-        self.search = Search(query, type)
-        self.type = type
+    def __init__(self, query: str, show_type: str):
+        self.search = Search(query, show_type)
+        self.type = show_type
         self.api_key = os.getenv("MOVIEDB_API_KEY")
         self.base_url = "https://api.themoviedb.org/3/"
 
@@ -147,4 +147,3 @@ class PopularMovies(BaseAPI):
     def __init__(self):
         endpoint = "https://api.themoviedb.org/3/movie/popular"
         super().__init__(endpoint=endpoint)
-

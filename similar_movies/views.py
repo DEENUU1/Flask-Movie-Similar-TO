@@ -70,18 +70,18 @@ def save_show():
     """ This function allows to add movie or tv show to list for login user """
     title = request.form.get('title')
     poster = request.form.get('poster')
-    save_show = SavedMovies(user_id=current_user.id, title=title, image_url=poster)
-    db.session.add(save_show)
+    save_shows = SavedMovies(user_id=current_user.id, title=title, image_url=poster)
+    db.session.add(save_shows)
     db.session.commit()
     flash("Show saved in your profile", category='success')
     return redirect(url_for('auth.profile'))
 
 
-@views.route('/delete-show/<int:id>', methods=['POST'])
+@views.route('/delete-show/<int:show_id>', methods=['POST'])
 @login_required
-def delete_show(id):
+def delete_show(show_id):
     """ This function allows to remove movie or tv show from list for login user """
-    show = SavedMovies.query.get(id)
+    show = SavedMovies.query.get(show_id)
     if show.user_id != current_user.id:
         flash("You are not allowed to delete this show", category='error')
         return redirect(url_for('auth.profile'))
@@ -97,18 +97,18 @@ def save_watched_show():
     """ This function allows to add watched movie or tv show to list for login user """
     title = request.form.get('title')
     poster = request.form.get('poster')
-    save_show = WatchedMovies(user_id=current_user.id, title=title, image_url=poster)
-    db.session.add(save_show)
+    save_watched = WatchedMovies(user_id=current_user.id, title=title, image_url=poster)
+    db.session.add(save_watched)
     db.session.commit()
     flash("Show saved in your watch history", category='success')
     return redirect(url_for('auth.profile'))
 
 
-@views.route('/delete-watched/<int:id>', methods=['POST'])
+@views.route('/delete-watched/<int:show_id>', methods=['POST'])
 @login_required
-def delete_watched_show(id):
+def delete_watched_show(show_id):
     """ This function allows to remove movie or tv show from watched list for login user """
-    show = WatchedMovies.query.get(id)
+    show = WatchedMovies.query.get(show_id)
     if show.user_id != current_user.id:
         flash("You are not allowed to delete this show", category='error')
         return redirect(url_for('auth.profile'))
