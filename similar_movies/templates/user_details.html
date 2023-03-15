@@ -12,6 +12,18 @@
 
 <div class="px-4 py-5 my-5 text-center text-light">
     <h1 class="display-5 fw-bold">Information about {{user_info.username}} </h1>
+    <p><strong>Email:</strong> {{user_info.email}}</p>
+    <p><strong>Username:</strong> {{user_info.username}}</p>
+    {% if user_info.country %}
+    <p><strong>Country:</strong> {{user_info.country}}</p>
+    {% else %}
+    <p><strong>Country:</strong> None</p>
+    {% endif %}
+    {% if user_info.bio %}
+    <p><strong>Bio:</strong> {{user_info.bio}}</p>
+    {% else %}
+    <p><strong>Bio:</strong> None</p>
+    {% endif %}
 </div>
 
 <div class="row justify-content-center text-light">

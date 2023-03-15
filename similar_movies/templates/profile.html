@@ -15,11 +15,21 @@
 {% block content %}
 
 
-<div class="px-4 py-2 my-3 text-center text-light">
-    <p class="display-10 fw-bold">Bio: {{user.bio}}</p>
-    <p class="display-10 fw-bold">Country: {{user.country}}</p>
-    <a href="profile/details">Edit your profile</a>
-    <a href="profile/details">Edit your profile picture</a>
+<div class="container">
+    <div class="px-4 py-2 my-3 text-center text-dark">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title"><strong>Welcome, {{user.username}}!</strong></h4>
+              {% if user.country %}
+              <p class="card-text"><strong>Country</strong>: {{user.country}}</p>
+              {% endif %}
+              {% if user.bio %}
+            <p class="card-text">{{user.bio}}</p>
+              {% endif %}
+            <a href="profile/details" class="btn btn-primary">Edit your profile</a>
+          </div>
+        </div>
+    </div>
 </div>
 
 <div class="px-4 py-2 my-3 text-center text-light">

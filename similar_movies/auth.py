@@ -4,7 +4,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from similar_movies import db
 from .models import User, SavedMovies, WatchedMovies
 from similar_movies.email import send_email
-from .forms import RegisterForm, LoginForm, ProfilePictureForm, ProfileDetailsForm
+from .forms import RegisterForm, LoginForm, ProfileDetailsForm
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
 import os
@@ -69,29 +69,6 @@ def profile():
     return render_template("profile.html",
                            saved_shows=saved_shows,
                            watched_shows=watched_shows,
-                           user=current_user)
-
-
-@auth.route('/profile/picture', methods=['POST', 'GET'])
-@login_required
-def profile_picture():
-    """ This view allows login user to add or change
-        the profile picture """
-    form = ProfilePictureForm()
-    if form.validate_on_submit():
-        file = form.image.data
-        filename = secure_filename(file.filename)
-        image_data = file.read()
-        current_user.image = image_data
-        db.session.commit()
-        file.save(os.path.join(
-            create_app().instance_path, 'profile', filename
-        ))
-        flash("Photo added successfully", category='success')
-        return redirect(url_for('auth.profile'))
-
-    return render_template('profile_picture.html',
-                           form=form,
                            user=current_user)
 
 

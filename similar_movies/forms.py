@@ -34,12 +34,6 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
-class ProfilePictureForm(FlaskForm):
-    """ This form allows login user to change the profile picture """
-    image = FileField(validators=[FileRequired()], render_kw={"placeholder": "Image"})
-    submit = SubmitField('Submit')
-
-
 class ProfileDetailsForm(FlaskForm):
     """ This form allows login user to change additional information on the profile """
     bio = TextAreaField(render_kw={"placeholder": "Bio"})

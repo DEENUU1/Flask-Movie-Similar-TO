@@ -10,7 +10,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(30), unique=True)
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(150))
-    image = db.Column(db.LargeBinary)
     bio = db.Column(db.Text)
     country = db.Column(db.String(30))
 
