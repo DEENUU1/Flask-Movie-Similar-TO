@@ -45,7 +45,7 @@ def sign_up():
                    new_user.email)
         flash("Welcome on the website", category='success')
         return redirect(url_for('views.home'))
-    return render_template('signup.html', form=form, user=current_user)
+    return render_template('signup.html', form=form)
 
 
 @auth.route('/logout')
@@ -101,10 +101,7 @@ def admin():
     user_id = current_user.id
     if user_id == 1:
         available_users = User.query.filter_by().all()
-        return render_template('admin.html',
-                               user=current_user,
-                               available_users=available_users)
-
+        return render_template('admin.html', available_users=available_users)
     else:
         flash("You are not a admin user", category='error')
         return redirect(url_for('views.home'))
@@ -120,11 +117,9 @@ def user_details(user_id: int):
         user_saved_shows = SavedMovies.query.filter_by(user_id=user_info.id).all()
         user_watched_shows = WatchedMovies.query.filter_by(user_id=user_info.id).all()
         return render_template('user_details.html',
-                               user=current_user,
                                user_info=user_info,
                                user_saved_shows=user_saved_shows,
                                user_watched_shows=user_watched_shows)
-
     else:
         flash("You are not a admin user", category='error')
         return redirect(url_for('views.home'))
