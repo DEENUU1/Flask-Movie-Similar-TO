@@ -1,7 +1,7 @@
 import json
 import os
 from dataclasses import dataclass
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Union
 
 from dotenv import load_dotenv
 from requests import get
@@ -34,7 +34,7 @@ class Search:
 
     @property
     @lru_cache(maxsize=128)
-    def return_id(self) -> str:
+    def return_id(self) -> Union[str, None]:
         """ This method returns user movie ID """
         base_url = f"https://api.themoviedb.org/3/search/{self.type}?api_key="
         result = get(base_url + self.api_key + "&query=" + self.create_query())

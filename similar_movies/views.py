@@ -17,8 +17,7 @@ def home():
         show_type = request.form['type']
         return redirect(url_for('views.list_similar_show', title=title, type=show_type))
     else:
-        return render_template('home.html',
-                               user=current_user)
+        return render_template('home.html')
 
 
 @views.route('/similar', methods=['GET'])
@@ -35,7 +34,6 @@ def list_similar_show():
         return render_template('list_similar.html',
                                return_similar_shows=return_similar_shows,
                                title=title,
-                               user=current_user,
                                show_type=show_type)
     except UnboundLocalError:
         flash("Wrong title, try again", category='error')
@@ -48,9 +46,7 @@ def upComing_list():
     page = request.args.get('page', 1, type=int)
     upcoming_movies = UpComingMovies().return_data(page=page)
     return render_template("upcoming_list.html",
-                           movies=upcoming_movies,
-                           user=current_user,
-                           current_page=page)
+                           movies=upcoming_movies, current_page=page)
 
 
 @views.route('/popular/movies', methods=['GET'])
@@ -60,9 +56,7 @@ def popular_movies():
     page = request.args.get('page', 1, type=int)
     popular_movie_list = PopularMovies().return_data(page=page)
     return render_template("popular_movies_list.html",
-                           popular_movie_list=popular_movie_list,
-                           user=current_user,
-                           current_page=page)
+                           popular_movie_list=popular_movie_list, current_page=page)
 
 
 @views.route('/save-show', methods=['POST'])
