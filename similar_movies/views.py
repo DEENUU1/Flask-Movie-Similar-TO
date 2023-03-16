@@ -35,7 +35,8 @@ def list_similar_show():
         return render_template('list_similar.html',
                                return_similar_shows=return_similar_shows,
                                title=title,
-                               user=current_user)
+                               user=current_user,
+                               show_type=show_type)
     except UnboundLocalError:
         flash("Wrong title, try again", category='error')
         return redirect(url_for('views.home'))
