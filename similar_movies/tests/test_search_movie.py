@@ -61,7 +61,7 @@ def mock_response():
 
 @pytest.fixture()
 def class_data():
-    return Similar(query="Test movie", type="movie")
+    return Similar(query="Test movie", show_type="movie")
 
 
 @patch('similar_movies.search_movie.get')

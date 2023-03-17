@@ -22,7 +22,7 @@ def test_list_similar_shows_view(test_client) -> None:
     """ Test for view with similar movie list
         pass if status code is equal to 200"""
     response = test_client.get('/similar', query_string={'title': 'The Matrix',
-                                                         'type': 'movie'})
+                                                         'show_type': 'movie'})
     assert response.status_code == 200
 
 
