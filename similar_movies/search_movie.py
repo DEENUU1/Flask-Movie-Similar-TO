@@ -35,7 +35,7 @@ class Search:
         self.query = query
         self.type = show_type
 
-    def __create_query(self) -> str:
+    def _create_query(self) -> str:
         """ This method format the user input into query """
         query_list = self.query.lower().split()
         return '-'.join(query_list)
@@ -45,7 +45,7 @@ class Search:
     def return_id(self) -> Union[str, None]:
         """ This method returns user movie ID """
         base_url = f"https://api.themoviedb.org/3/search/{self.type}?api_key="
-        result = get(base_url + self.__api_key + "&query=" + self.__create_query())
+        result = get(base_url + self.__api_key + "&query=" + self._create_query())
         json_result = json.loads(result.content)
         data = json_result['results']
 
@@ -64,7 +64,7 @@ class SearchVideos:
         self.base_url = "https://api.themoviedb.org/3/movie/"
         self.show_id = show_id
 
-    def __search_videos(self) -> List[Dict[str, Any]]:
+    def _search_videos(self) -> List[Dict[str, Any]]:
         """ This method allows to make request to the API and get videos based on the show id"""
         result = get(f"{self.base_url}/{self.show_id}/videos?api_key={self.__api_key}")
         json_result = json.loads(result.content)
@@ -75,7 +75,7 @@ class SearchVideos:
     def return_videos(self) -> List[VideoData]:
         """ This method allows to return videos from the API"""
         all_videos = []
-        for video in self.__search_videos():
+        for video in self._search_videos():
             shows_data = VideoData(
                 name=video['name'],
                 key=video['key']
@@ -93,7 +93,7 @@ class Similar:
         self.base_url = "https://api.themoviedb.org/3/"
 
     @lru_cache(maxsize=128)
-    def __search_for_similar(self) -> List[Dict[str, Any]]:
+    def _search_for_similar(self) -> List[Dict[str, Any]]:
         """ This method is searching for similar tv shows or movies """
         all_results = []
         page_number = 1
@@ -117,7 +117,7 @@ class Similar:
 
         if self.type == "movie":
             all_movies = []
-            for movie in self.__search_for_similar():
+            for movie in self._search_for_similar():
                 shows_data = ShowData(
                     title=movie['title'],
                     release_date=movie['release_date'][:4],
@@ -130,7 +130,7 @@ class Similar:
 
         elif self.type == 'tv':
             all_tv_shows = []
-            for show in self.__search_for_similar():
+            for show in self._search_for_similar():
                 show_data = ShowData(
                     title=show['name'],
                     release_date=show['first_air_date'][:4],
@@ -149,7 +149,7 @@ class BaseAPI:
         self.endpoint = endpoint
         self.__api_key = os.getenv("MOVIEDB_API_KEY")
 
-    def __get_data(self, page: int = 1) -> List[Dict[str, Any]]:
+    def _get_data(self, page: int = 1) -> List[Dict[str, Any]]:
         """ This method allows to make request to the API """
         response = get(f"{self.endpoint}?api_key={self.__api_key}&page={page}")
         json_result = json.loads(response.content)
@@ -160,7 +160,7 @@ class BaseAPI:
     def return_data(self, page: int = 1) -> List[ShowData]:
         """ This method allows to return data from the API and display them in the flask view """
         all_data = []
-        for data in self.__get_data(page=page):
+        for data in self._get_data(page=page):
             data_object = ShowData(
                 title=data['title'],
                 overview=data['overview'],
