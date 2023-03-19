@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} Videos {% endblock %}
+
+{% block script %}
+    <script src="/static/js/card_animation.js" defer></script>
+{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="/static/css/cards.css" />
+{% endblock %}
+
+{% block content %}
+
+{% if return_videos %}
+<div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold" style="text-transform: uppercase">Videos </h1>
+</div>
+
+
+
+    {% for video in return_videos %}
+        <div class="card">
+            <div class="card-info">
+                <h2>{{video.name}}</h2>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{video.key}}"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+<div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold">There is no videos for this show </h1>
+</div>
+{% endif %}
+
+
+{% endblock %}

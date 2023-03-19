@@ -3,8 +3,7 @@ from flask_login import current_user, login_required
 
 from similar_movies import db
 from similar_movies.models import SavedMovies, WatchedMovies
-from similar_movies.search_movie import Similar, UpComingMovies, PopularMovies
-
+from similar_movies.search_movie import Similar, UpComingMovies, PopularMovies, SearchVideos
 
 views = Blueprint('views', __name__)
 
@@ -37,6 +36,17 @@ def list_similar_show():
                                show_type=show_type)
     except UnboundLocalError:
         flash("Wrong title, try again", category='error')
+        return redirect(url_for('views.home'))
+
+
+@views.route('/videos/<int:show_id>', methods=['GET'])
+def show_videos(show_id):
+    """ This view allows to display details about movie or tv show """
+    try:
+        return_videos = SearchVideos(show_id).return_videos()
+        return render_template("show_videos.html", return_videos=return_videos)
+    except IndexError:
+        flash("Could not display videos for this show", category="error")
         return redirect(url_for('views.home'))
 
 

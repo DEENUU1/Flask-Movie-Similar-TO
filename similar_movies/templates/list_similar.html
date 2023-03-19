@@ -28,7 +28,7 @@
                 <span>({{show.release_date}})</span>
                 </h2>
                 <p>{{show.overview}}</p>
-
+                <a href="{{ url_for('views.show_videos', show_id=show.id) }}">Details</a>
                 <div class="d-flex align-items-center">
                     <form action="{{ url_for('views.save_show') }}" method="POST">
                         <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
