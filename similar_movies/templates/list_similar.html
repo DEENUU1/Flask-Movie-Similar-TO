@@ -24,11 +24,12 @@
         <div class="card">
             <img src="https://image.tmdb.org/t/p/w500/{{show.poster}}"/>
             <div class="card-info">
-                <h2>{{show.title}}
+                <a href="{{ url_for('views.show_videos', show_id=show.id) }}">
+                    <h2>{{show.title}}
                 <span>({{show.release_date}})</span>
-                </h2>
+                </h2></a>
                 <p>{{show.overview}}</p>
-                <a href="{{ url_for('views.show_videos', show_id=show.id) }}">Details</a>
+
                 <div class="d-flex align-items-center">
                     <form action="{{ url_for('views.save_show') }}" method="POST">
                         <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
