@@ -38,9 +38,12 @@
                 <form action="{{ url_for('views.save_watched_show') }}" method="POST">
                     <input type="hidden" name="title" value="{{ show.title }} ({{show.release_date}})">
                     <input type="hidden" name="poster" value="{{show.poster}}">
-                    <button type="submit" class="btn btn-primary mr-2">Already Watched</button>
+                    <button type="submit" class="btn btn-primary mr-2" style="margin-right: 10px;">Already Watched</button>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 </form>
+
+                <a class="btn btn-primary" href="{{ url_for('views.show_videos', show_id=show.id) }}">VIDEOS</a>
+
             </div>
 
         </div>
