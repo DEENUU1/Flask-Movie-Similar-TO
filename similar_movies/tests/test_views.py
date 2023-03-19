@@ -38,3 +38,8 @@ def test_popular_movie_list_view(test_client) -> None:
     response = test_client.get('/popular/movies')
     assert response.status_code == 200
 
+
+def test_show_videos_view(test_client) -> None:
+    """ Test to check show_videos view status code """
+    response = test_client.get('/videos/123')
+    assert response.status_code == 200

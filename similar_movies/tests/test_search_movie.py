@@ -3,7 +3,7 @@ from requests import Response
 from unittest import mock
 from unittest.mock import patch
 from similar_movies.search_movie import \
-    (Search, ShowData, BaseAPI, UpComingMovies, PopularMovies, Similar)
+    (Search, ShowData, BaseAPI, UpComingMovies, PopularMovies, Similar, VideoData)
 
 
 @pytest.fixture()
@@ -32,7 +32,7 @@ def test_base_api_get_data(mock_get, endpoint, mock_response):
 
 def test_base_api_return_data(endpoint) -> None:
     with patch.object(endpoint, '_get_data',
-                      return_value=[{'title': 'Movie 1', 'overview': 'Overview 1', 'poster_path': 'poster1.jpg', 'release_date': '2022-01-01'}]):
+                      return_value=[{'title': 'Movie 1', 'overview': 'Overview 1', 'poster_path': 'poster1.jpg', 'release_date': '2022-01-01', 'id': 123}]):
         data = endpoint.return_data()
 
     assert data[0].title == 'Movie 1'
@@ -67,16 +67,16 @@ def class_data():
 @patch('similar_movies.search_movie.get')
 def test_similar_search_for_similar(mock_get, class_data, mock_response) -> None:
     mock_get.return_value = mock_response
-    data = class_data.search_for_similar()
+    data = class_data._search_for_similar()
     assert isinstance(data, list)
     assert isinstance(data[0], dict)
     assert data[0]['title'] == 'Movie 1'
 
 
 def test_similar_return_similar_shows(class_data) -> None:
-    with patch.object(class_data, 'search_for_similar',
+    with patch.object(class_data, '_search_for_similar',
                       return_value=[{'title': 'Movie 1', 'overview': 'Overview 1', 'poster_path': 'poster1.jpg',
-                                     'release_date': '2022-01-01'}]):
+                                     'release_date': '2022-01-01', 'id': 123}]):
         data = class_data.return_similar_shows()
     assert isinstance(data, list)
     assert isinstance(data[0], ShowData)
@@ -94,7 +94,7 @@ def movie_search():
 
 def test_create_query(movie_search) -> None:
     """ Test for return query function """
-    assert movie_search.create_query() == "ant-man-and-the-wasp"
+    assert movie_search._create_query() == "ant-man-and-the-wasp"
 
 
 def mocked_requests_get(*args) -> None:
@@ -114,11 +114,17 @@ def test_similar_movie_data_class() -> None:
     data = ShowData(title="Ant man",
                     overview="Short overview",
                     release_date="20.06.2018",
-                    poster="/poster.png")
+                    poster="/poster.png",
+                    id=123)
     assert data.title == "Ant man"
     assert data.overview == "Short overview"
     assert data.release_date == "20.06.2018"
     assert data.poster == "/poster.png"
 
 
-
+def test_video_data_data_class() -> None:
+    """ Test for VideoData dataclass """
+    data = VideoData(name="Movie trailer 1",
+                     key="AASD123")
+    assert data.name == "Movie trailer 1"
+    assert data.key == "AASD123"
