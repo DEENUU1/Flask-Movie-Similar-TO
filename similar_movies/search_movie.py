@@ -23,10 +23,8 @@ class ShowData:
 @dataclass()
 class VideoData:
     """ This dataclass allows to represent data about videos for movies """
-    title: str
+    name: str
     key: str
-
-
 
 
 
@@ -60,6 +58,31 @@ class Search:
                 return "None"
         else:
             raise Exception(f"Status code {result.status_code}")
+
+
+class SearchVideos:
+    def __init__(self, show_id: int):
+        self.api_key = os.getenv("MOVIEDB_API_KEY")
+        self.base_url = "https://api.themoviedb.org/3/movie/"
+        self.show_id = show_id
+
+    def search_videos(self) -> List[Dict[str, Any]]:
+        result = get(f"{self.base_url}/{self.show_id}/videos?api_key{self.api_key}")
+        json_result = json.loads(result.content)
+
+        if not json_result.get('results'):
+            return []
+        return json_result['results']
+
+    def return_videos(self) -> List[VideoData]:
+        all_videos = []
+        for video in self.search_videos():
+            shows_data = VideoData(
+                name=video['name'],
+                key=video['key']
+            )
+            all_videos.append(shows_data)
+        return all_videos
 
 
 class Similar:
