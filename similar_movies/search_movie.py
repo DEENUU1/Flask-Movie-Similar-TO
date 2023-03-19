@@ -17,6 +17,7 @@ class ShowData:
     overview: str
     release_date: str
     poster: str
+    id: int
 
 
 class Search:
@@ -88,7 +89,8 @@ class Similar:
                     title=movie['title'],
                     release_date=movie['release_date'][:4],
                     overview=movie['overview'],
-                    poster=movie['poster_path']
+                    poster=movie['poster_path'],
+                    id=movie['id']
                 )
                 all_movies.append(shows_data)
             return all_movies
@@ -100,7 +102,8 @@ class Similar:
                     title=show['name'],
                     release_date=show['first_air_date'][:4],
                     overview=show['overview'],
-                    poster=show['backdrop_path']
+                    poster=show['backdrop_path'],
+                    id=show['id']
                 )
                 all_tv_shows.append(show_data)
             return all_tv_shows
@@ -129,7 +132,8 @@ class BaseAPI:
                 title=data['title'],
                 overview=data['overview'],
                 poster=data['poster_path'],
-                release_date=data['release_date']
+                release_date=data['release_date'],
+                id=data['id']
             )
             all_data.append(data_object)
         return all_data
