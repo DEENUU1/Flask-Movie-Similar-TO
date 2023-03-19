@@ -20,6 +20,17 @@ class ShowData:
     id: int
 
 
+@dataclass()
+class VideoData:
+    """ This dataclass allows to represent data about videos for movies """
+    title: str
+    key: str
+
+
+
+
+
+
 class Search:
     """ This class allows to get movie ID """
 
