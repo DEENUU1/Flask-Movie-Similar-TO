@@ -5,36 +5,42 @@ from .models import User
 
 
 class RegisterForm(FlaskForm):
-    """ This form allows to Sign Up """
-    email = EmailField(validators=[
-            InputRequired()], render_kw={'placeholder': "Email"})
-    username = StringField(validators=[
-            InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
-    password = PasswordField(validators=[
-            InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
-    submit = SubmitField('Sign Up')
+    """This form allows to Sign Up"""
 
+    email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+    username = StringField(
+        validators=[InputRequired(), Length(min=4, max=20)],
+        render_kw={"placeholder": "Username"},
+    )
+    password = PasswordField(
+        validators=[InputRequired(), Length(min=8, max=20)],
+        render_kw={"placeholder": "Password"},
+    )
+    submit = SubmitField("Sign Up")
 
     def validate_email(self, email):
-        """ This method is checking if email already exist in database"""
-        existing_user_email = User.query.filter_by(
-            email=email.data).first()
+        """This method is checking if email already exist in database"""
+        existing_user_email = User.query.filter_by(email=email.data).first()
         if existing_user_email:
             raise ValidationError(
-                'That email already exists. Please choose a different one.')
+                "That email already exists. Please choose a different one."
+            )
 
 
 class LoginForm(FlaskForm):
-    """ This form allows to log in """
-    email = EmailField(validators=[
-            InputRequired()], render_kw={"placeholder": "Email"})
-    password = PasswordField(validators=[
-            InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
-    submit = SubmitField('Login')
+    """This form allows to log in"""
+
+    email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+    password = PasswordField(
+        validators=[InputRequired(), Length(min=8, max=20)],
+        render_kw={"placeholder": "Password"},
+    )
+    submit = SubmitField("Login")
 
 
 class ProfileDetailsForm(FlaskForm):
-    """ This form allows login user to change additional information on the profile """
+    """This form allows login user to change additional information on the profile"""
+
     bio = TextAreaField(render_kw={"placeholder": "Bio"})
     country = StringField(render_kw={"placeholder": "Country"})
-    submit = SubmitField('Submit')
+    submit = SubmitField("Submit")

@@ -2,56 +2,52 @@ from similar_movies.models import User, SavedMovies, WatchedMovies
 
 
 def test_user_model() -> None:
-    """ Simple model test to test creating a new user """
-    user_1 = User(email='test@email.com',
-                  username='testuser',
-                  password='test_password')
+    """Simple model test to test creating a new user"""
+    user_1 = User(email="test@email.com", username="testuser", password="test_password")
 
-    assert user_1.username == 'testuser'
-    assert user_1.password == 'test_password'
-    assert user_1.email == 'test@email.com'
+    assert user_1.username == "testuser"
+    assert user_1.password == "test_password"
+    assert user_1.email == "test@email.com"
 
 
 def test_new_user_model() -> None:
-    """ NEW User model test to test creating a new user """
-    user_1 = User(email='test@email.com',
-                  username='testuser',
-                  password='test_password',
-                  bio="This is a test bio text",
-                  country="USA")
+    """NEW User model test to test creating a new user"""
+    user_1 = User(
+        email="test@email.com",
+        username="testuser",
+        password="test_password",
+        bio="This is a test bio text",
+        country="USA",
+    )
 
     assert user_1.bio == "This is a test bio text"
     assert user_1.country == "USA"
 
 
 def test_saved_movies_model() -> None:
-    """ Simple model test to test saving a movie """
-    user_1 = User(id=1,
-                  username='testuser',
-                  email='test@email.com',
-                  password='testpassword')
+    """Simple model test to test saving a movie"""
+    user_1 = User(
+        id=1, username="testuser", email="test@email.com", password="testpassword"
+    )
 
-    movie_1 = SavedMovies(id=1,
-                          user_id=user_1.id,
-                          title="Test movie",
-                          image_url='/asdasd002')
+    movie_1 = SavedMovies(
+        id=1, user_id=user_1.id, title="Test movie", image_url="/asdasd002"
+    )
 
     assert movie_1.title == "Test movie"
-    assert movie_1.image_url == '/asdasd002'
+    assert movie_1.image_url == "/asdasd002"
     assert movie_1.user_id == 1
 
 
 def test_watched_movies_model() -> None:
-    """ Simple model test to test saving watched movie """
-    user_1 = User(id=1,
-                 username='testuser',
-                 email='test@email.com',
-                 password='testpassword')
+    """Simple model test to test saving watched movie"""
+    user_1 = User(
+        id=1, username="testuser", email="test@email.com", password="testpassword"
+    )
 
-    movie_1 = WatchedMovies(id=1,
-                            user_id=user_1.id,
-                            title="Test movie",
-                            image_url="adsad21")
+    movie_1 = WatchedMovies(
+        id=1, user_id=user_1.id, title="Test movie", image_url="adsad21"
+    )
 
     assert movie_1.title == "Test movie"
     assert movie_1.user_id == user_1.id

@@ -79,12 +79,12 @@ EMAIL_PASSWORD=<GMAIL PASSWORD>
 
 
 Key api you can get here: https://www.themoviedb.org/documentation/api \
-Password for your Gmail account you can get here: https://bit.ly/3lj3dhQ 
+Password for your Gmail account you can get here: https://bit.ly/3lj3dhQ
 
 Run the application by using this command
 
 ```bash
-python main.py 
+python main.py
 ```
 ## Running Tests
 
@@ -98,4 +98,3 @@ To run tests, run the following command
 ## Authors
 
 - [@DEENUU1](https://www.github.com/DEENUU1)
-
